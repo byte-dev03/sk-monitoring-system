@@ -1,0 +1,39 @@
+
+.sidebar {
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  padding-top: 60px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.main-content {
+  margin-left: 250px;
+  padding: 20px;
+}
+.navbar {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+.stat-card {
+  transition: transform 0.3s;
+}
+.stat-card:hover {
+  transform: translateY(-5px);
+}
+.project-card {
+  margin-bottom: 20px;
+}
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-top: 0;
+  }
+  .main-content {
+    margin-left: 0;
+  }
+}

@@ -66,14 +66,14 @@ loginForm.addEventListener('submit', function(e) {
     }
 });
 
-// Handle logout
-logoutBtn.addEventListener('click', function() {
-    // Clear both storage types to be safe
-    localStorage.removeItem('authUser');
-    sessionStorage.removeItem('authUser');
-    showLoginForm();
-});
-
+// // Handle logout
+// logoutBtn.addEventListener('click', function() {
+//     // Clear both storage types to be safe
+//     localStorage.removeItem('authUser');
+//     sessionStorage.removeItem('authUser');
+//     showLoginForm();
+// });
+//
 // Authentication function
 function authenticateUser(username, password) {
     return users.find(user => 
@@ -109,16 +109,9 @@ function checkAuthStatus() {
     }
 }
 
-// Show dashboard and hide login form
-function showDashboard(username) {
-    loginSection.classList.add('d-none');
-    dashboard.classList.remove('d-none');
-    userName.textContent = username;
-}
 
 // Show login form and hide dashboard
 function showLoginForm() {
-    dashboard.classList.add('d-none');
     loginSection.classList.remove('d-none');
     loginForm.reset();
     messageDiv.innerHTML = '';

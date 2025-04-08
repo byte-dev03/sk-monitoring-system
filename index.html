@@ -3,24 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <title>SK Monitoring System - Login</title>
   </head>
-  <body>
-    <div id="app">
-      <img class="w-50" src="/src/sk-logo.jpg">
+  <body class="d-flex justify-content-center align-items-center vh-100">
+    <div class="container d-flex justify-content-center align-items-center">
+
+      <div id='header' class='d-flex flex-column justify-content-center align-items-center -mt-10'>
+
+        <img id='logo' src="/src/sk-logo.svg" alt="sk-logo">
+        <h2 class="text-white">SK Monitoring System</h2>
+      </div>
+
            <!-- Login Form -->
-      <div id="login-section" class="login-container">
+      <div id="login-section" class="card shadow p-4 " style="max-width: 400px; width: 100%">
           <h2 class="text-center mb-4">Login</h2>
           <div id="message"></div>
-          <form id="login-form">
-              <div class="mb-3">
-                  <label for="username" class="form-label">Username</label>
+          <form id="login-form" class="needs-validation" novalidate>
+              <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="username" required>
+                  <label for="username">Username</label>
+                  <div class="invalid-feedback">Please enter your username.</div>
               </div>
-              <div class="mb-3">
-                  <label for="password" class="form-label">Password</label>
+              <div class="form-floating mb-3 position-relative">
                   <input type="password" class="form-control" id="password" required>
+                  <label for="password">Password</label>
+                  <button type="button"
+                          class="btn btn-sm btn-outline-secondary position-absolute end-0 top-0 mt-2 me-2"
+                          onClick="togglePassword()">Show</button>
+                  <div class="invalid-feedback">Please enter your password.</div>
+
               </div>
               <div class="mb-3 form-check">
                   <input type="checkbox" class="form-check-input" id="remember-me">
@@ -32,28 +43,8 @@
           </form>
       </div>
 
-       <!-- Dashboard -->
-        <div id="dashboard" class="dashboard-container d-none">
-            <div class="text-center mb-4">
-                <h2>Welcome <span id="user-name" class="text-primary"></span>!</h2>
-                <p class="lead">You are now logged in.</p>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-header">Dashboard</div>
-                        <div class="card-body">
-                            <p>This is your secure dashboard area. Only authenticated users can see this content.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="d-grid">
-                <button id="logout-btn" class="btn btn-danger">Logout</button>
-            </div>
-        </div>
     </div>
-    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="module" src="/src/main.js"></script>
     <script type="module" src="/src/auth.js"></script>
   </body>
 </html>

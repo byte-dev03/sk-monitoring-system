@@ -1,4 +1,5 @@
-import "./style.css"
+import "bootstrap/dist/css/boostrap.css"
+import "bootstrap/dist/js/bootstrap"
 
 // Check if user is authenticated
 const authUser = JSON.parse(localStorage.getItem("authUser")) ||
