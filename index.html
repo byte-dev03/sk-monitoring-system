@@ -2,13 +2,58 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title></title>
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css" />
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <div id="app">
+      <img class="w-50" src="/src/sk-logo.jpg">
+           <!-- Login Form -->
+      <div id="login-section" class="login-container">
+          <h2 class="text-center mb-4">Login</h2>
+          <div id="message"></div>
+          <form id="login-form">
+              <div class="mb-3">
+                  <label for="username" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="username" required>
+              </div>
+              <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" required>
+              </div>
+              <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-check-input" id="remember-me">
+                  <label class="form-check-label" for="remember-me">Remember me</label>
+              </div>
+              <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+          </form>
+      </div>
+
+       <!-- Dashboard -->
+        <div id="dashboard" class="dashboard-container d-none">
+            <div class="text-center mb-4">
+                <h2>Welcome <span id="user-name" class="text-primary"></span>!</h2>
+                <p class="lead">You are now logged in.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-header">Dashboard</div>
+                        <div class="card-body">
+                            <p>This is your secure dashboard area. Only authenticated users can see this content.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid">
+                <button id="logout-btn" class="btn btn-danger">Logout</button>
+            </div>
+        </div>
+    </div>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="module" src="/src/auth.js"></script>
   </body>
 </html>
