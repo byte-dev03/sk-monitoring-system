@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div id="selected-files" class="mb-3"></div>
                 
                 <div class="mb-3">
-                  <label for="comments" class="form-label">Description</label>
+                  <label for="description" class="form-label">Description</label>
                   <textarea class="form-control" id="description" rows="3" placeholder="Add any description about this accomplishment or project..."></textarea>
                 </div>
                 
@@ -73,11 +73,12 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
       `;
+      
+      const typeSelect = document.getElementById("typeSelect");
 
-      // Add event listener to the typeSelect dropdown
-      const typeSelect = document.getElementById('typeSelect');
       typeSelect.addEventListener('change', function() {
           const selectedValue = typeSelect.value;
+          uploadType = selectedValue == "2" ? "project" : "";
           renderUploadSection(); // Re-render the section with the new value
       });
 
