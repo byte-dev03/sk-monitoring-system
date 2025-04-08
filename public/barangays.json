@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "name": "Poblacion",
+    "reportCount": 12,
+    "lastUpload": "2025-04-05T14:30:00Z",
+    "projects": [
+      { "id": 101, "title": "Clean‑up Drive" },
+      { "id": 102, "title": "Tree Planting" }
+    ],
+    "accomplishments": [
+      { "id": 201, "description": "Youth Leadership Training Completed" },
+      { "id": 202, "description": "100 Hygiene Kits Donated" }
+    ]
+  }
+]

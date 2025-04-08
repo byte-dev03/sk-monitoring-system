@@ -102,6 +102,10 @@ body {
 #header #logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+#header h2 {
+  position: relative;
+  top: -40px;
+}
 #login-section {
   position: relative;
   left: -100px;

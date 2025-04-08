@@ -1,94 +1,110 @@
-import "bootstrap/dist/css/boostrap.css"
-import "bootstrap/dist/js/bootstrap"
+import "./css/monitor.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-// Check if user is authenticated
-const authUser = JSON.parse(localStorage.getItem("authUser")) ||
-                 JSON.parse(sessionStorage.getItem("authUser"));
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Auth guard
+  const authUser = JSON.parse(localStorage.getItem("authUser"))
+                 || JSON.parse(sessionStorage.getItem("authUser"));
+  if (!authUser) {
+    return void (window.location.href = "/index.html");
+  }
 
-if (!authUser) {
-  window.location.href = "/index.html"; // redirect to login
-} else {
-  console.log("Logged in as:", authUser.username);
-  
-  // Update username in the navbar
-  document.getElementById('admin-username').textContent = authUser.username;
-  
-  // Handle logout
-  document.getElementById('logout-btn').addEventListener('click', function() {
-    // Clear authentication data
+  // 2. Navbar / logout
+  document.getElementById("admin-username").textContent = authUser.username;
+  document.getElementById("logout-btn").addEventListener("click", () => {
     localStorage.removeItem("authUser");
     sessionStorage.removeItem("authUser");
-    
-    // Redirect to login page
     window.location.href = "/index.html";
   });
-  
-  // Initialize sidebar navigation
+
+  // 3. Sidebar links
   initSidebar();
-  
-  // Initialize dummy data (replace with actual API calls in production)
-  initDashboardData();
+
+  // 4. Barangay dropdown + dashboard
+  initDropdown()
+    .then(() => initDashboardData())
+    .catch(err => console.error("Failed to init dashboard:", err));
+});
+
+async function initDropdown() {
+  const sel = document.getElementById("barangay-select");
+  if (!sel) throw new Error("#barangay-select not found");
+
+  const res = await fetch("http://localhost:3000/barangays");
+  if (!res.ok) throw new Error(`Failed to load barangays (${res.status})`);
+  const allBarangays = await res.json();
+
+  sel.innerHTML += allBarangays
+    .map(b => `<option value="${b.id}">${b.name}</option>`)
+    .join("");
 }
 
-// Sidebar navigation functionality
 function initSidebar() {
-  const navLinks = document.querySelectorAll('.sidebar .nav-link');
-  
+  const navLinks = document.querySelectorAll(".sidebar .nav-link");
   navLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      // Remove active class from all links
-      navLinks.forEach(item => item.classList.remove('active'));
-      
-      // Add active class to clicked link
-      e.target.classList.add('active');
-      
-      // Scroll to section (smooth scroll)
-      const targetId = e.target.getAttribute('href').substring(1);
-      const targetElement = document.getElementById(targetId);
-      
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 70,
-          behavior: 'smooth'
-        });
-      }
-      
+    link.addEventListener("click", e => {
       e.preventDefault();
+      navLinks.forEach(l => l.classList.remove("active"));
+      link.classList.add("active");
+
+      const targetId = link.getAttribute("href").slice(1);
+      const el = document.getElementById(targetId);
+      if (el) {
+        window.scrollTo({ top: el.offsetTop - 70, behavior: "smooth" });
+      }
     });
   });
 }
 
-// Initialize dashboard data
 function initDashboardData() {
-  // In a real application, you would fetch this data from an API
-  // For now, we'll use static data
-  
-  // Projects table functionality
-  const projectActionButtons = document.querySelectorAll('.btn-info, .btn-warning, .btn-danger');
-  
-  projectActionButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-      const action = e.target.classList.contains('btn-info') ? 'view' : 
-                     e.target.classList.contains('btn-warning') ? 'edit' : 'delete';
-      
-      const projectRow = e.target.closest('tr');
-      const projectId = projectRow.cells[0].textContent;
-      const projectName = projectRow.cells[1].textContent;
-      
-      if (action === 'view') {
-        alert(`Viewing details for project: ${projectName} (${projectId})`);
-        // Here you would show a modal with project details or navigate to a project details page
-      } else if (action === 'edit') {
-        alert(`Editing project: ${projectName} (${projectId})`);
-        // Here you would show a modal with editable project fields
-      } else if (action === 'delete') {
-        if (confirm(`Are you sure you want to delete project: ${projectName} (${projectId})?`)) {
-          alert(`Project deleted: ${projectName} (${projectId})`);
-          // Here you would call an API to delete the project and then remove the row from the DOM
-        }
-      }
-    });
+  const sel = document.getElementById("barangay-select");
+  const detail = document.getElementById("barangay-detail");
+  if (!sel || !detail) throw new Error("Missing #barangay-select or #barangay-detail");
+
+  sel.addEventListener("change", async e => {
+    const id = e.target.value;
+    try {
+      const res = await fetch(`http://localhost:3000/barangays/${id}`);
+      if (!res.ok) throw new Error(`Error fetching barangay ${id}: ${res.status}`);
+      const b = await res.json();
+      renderDetail(b);
+    } catch (err) {
+      console.error(err);
+      detail.innerHTML = `<div class="alert alert-danger">Failed to load data.</div>`;
+    }
   });
-  
-  // Add more event listeners and functionality as needed for other dashboard components
 }
+
+function renderDetail(b) {
+  document.getElementById("barangay-detail").innerHTML = `
+    <div class="card shadow-sm">
+      <div class="card-header d-flex justify-content-between">
+        <h5>${b.name}</h5>
+        <span class="badge bg-primary">${b.projects.length} Projects</span>
+      </div>
+      <div class="card-body d-flex flex-column">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#proj" type="button">Projects</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#acc" type="button">Accomplishments</button>
+          </li>
+        </ul>
+        <div class="tab-content flex-grow-1 mt-3">
+          <div class="tab-pane fade show active" id="proj">
+            <ul class="list-group list-group-flush">
+              ${b.projects.map(p => `<li class="list-group-item">${p.title}</li>`).join("")}
+            </ul>
+          </div>
+          <div class="tab-pane fade" id="acc">
+            <ul class="list-group list-group-flush">
+              ${b.accomplishments.map(a => `<li class="list-group-item">${a.description}</li>`).join("")}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+
