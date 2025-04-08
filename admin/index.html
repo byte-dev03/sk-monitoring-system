@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SK Federation - Admin Dashboard</title>
+    <title>SK Federation Monitoring System - Admin Monitor</title>
   </head>
   <body>
     <!-- Top Navbar -->
@@ -59,17 +59,19 @@
 
     <!-- Main Content -->
     <main class="main-content">
-      <div class="mb-3">
-        <label for="barangay-select" class="form-label">Select Barangay:</label> 
-        <select id='barangay-select' class='form-select'>
-          <option value="" disabled selected>Type or scroll..</option> 
-        </select>
-      </div>
-
-      <div id='barangay-detail'></div>
       <!-- Dashboard Overview Section -->
       <div id="dashboard-section" class="mb-5 pt-4">
         <h2>Dashboard</h2>
+          
+          <!-- Searching for barangays in the database -->
+          <div class="mb-3">
+            <label for="barangay-select" class="form-label">Select Barangay:</label> 
+            <select id='barangay-select' class='form-select'>
+              <option value="" disabled selected>Type or scroll..</option> 
+            </select>
+          </div>
+
+          <div id='barangay-detail'></div>
 
         <div class="row mt-4">
           <div class="col-md-3 mb-4">
@@ -270,6 +272,7 @@
       </div>
     </main>
 
-    <script type="module" src="/src/monitor.js"></script> 
+    <script type="module" src="/src/admin/admin.js"></script> 
   </body>
 </html>
+

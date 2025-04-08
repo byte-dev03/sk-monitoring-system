@@ -1,37 +1,11 @@
-import "./css/monitor.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./admin.css";
 
-document.addEventListener("DOMContentLoaded", () => {
-  // 1. Auth guard
-  const authUser = JSON.parse(localStorage.getItem("authUser"))
-                 || JSON.parse(sessionStorage.getItem("authUser"));
-  if (!authUser) {
-    return void (window.location.href = "/index.html");
-  }
 
-  // 2. Navbar / logout
-  document.getElementById("admin-username").textContent = authUser.username;
-  document.getElementById("logout-btn").addEventListener("click", () => {
-    localStorage.removeItem("authUser");
-    sessionStorage.removeItem("authUser");
-    window.location.href = "/index.html";
-  });
-
-  // 3. Sidebar links
-  initSidebar();
-
-  // 4. Barangay dropdown + dashboard
-  initDropdown()
-    .then(() => initDashboardData())
-    .catch(err => console.error("Failed to init dashboard:", err));
-});
-
-async function initDropdown() {
+export async function initDropdown() {
   const sel = document.getElementById("barangay-select");
   if (!sel) throw new Error("#barangay-select not found");
 
-  const res = await fetch("http://localhost:3000/barangays");
+  const res = await fetch("http://localhost:3000/api/barangays");
   if (!res.ok) throw new Error(`Failed to load barangays (${res.status})`);
   const allBarangays = await res.json();
 
@@ -40,7 +14,7 @@ async function initDropdown() {
     .join("");
 }
 
-function initSidebar() {
+export function initSidebar() {
   const navLinks = document.querySelectorAll(".sidebar .nav-link");
   navLinks.forEach(link => {
     link.addEventListener("click", e => {
@@ -57,7 +31,7 @@ function initSidebar() {
   });
 }
 
-function initDashboardData() {
+export function initDashboardData() {
   const sel = document.getElementById("barangay-select");
   const detail = document.getElementById("barangay-detail");
   if (!sel || !detail) throw new Error("Missing #barangay-select or #barangay-detail");
@@ -65,7 +39,7 @@ function initDashboardData() {
   sel.addEventListener("change", async e => {
     const id = e.target.value;
     try {
-      const res = await fetch(`http://localhost:3000/barangays/${id}`);
+      const res = await fetch(`http://localhost:3000/api/barangays/${id}`);
       if (!res.ok) throw new Error(`Error fetching barangay ${id}: ${res.status}`);
       const b = await res.json();
       renderDetail(b);

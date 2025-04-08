@@ -3,7 +3,6 @@ import './style.css'
 // Mock user database (in a real app, this would be on the server)
 const users = [
     { username: 'user1', password: 'pass1' },
-    { username: 'user2', password: 'pass2' },
     { username: 'admin', password: 'admin123' }
 ];
 
@@ -56,9 +55,9 @@ loginForm.addEventListener('submit', function(e) {
         // Show dashboard after brief delay
         setTimeout(() => {
           if (user.username === "admin") {
-            window.location.href = "/monitor.html";
+            window.location.href = "/admin/index.html";
           } else {
-            window.location.href = "/upload.html";
+            window.location.href = "/users/index.html";
           }
         }, 1500);
     } else {
@@ -99,9 +98,9 @@ function checkAuthStatus() {
             showLoginForm();
         } else {
           if (authUser.username == "admin") {
-            window.location.href = "monitor.html";
+            window.location.href = "/admin/monitor.html";
           } else {
-            window.location.href = "upload.html"; 
+            window.location.href = "/users/upload.html"; 
           }
         }
     } else {

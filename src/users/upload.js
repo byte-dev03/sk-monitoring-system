@@ -1,37 +1,98 @@
-import "./style.css"
+import "./users.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-// Check if user is authenticated
-const authUser = JSON.parse(localStorage.getItem("authUser")) ||
-                 JSON.parse(sessionStorage.getItem("authUser"));
+document.addEventListener("DOMContentLoaded", () => {
+    let uploadType = "";
 
-if (!authUser) {
-  window.location.href = "/index.html"; // redirect to login
-} else {
-  console.log("Logged in as:", authUser.username);
-  
-  // Set user information in the UI
-  document.getElementById('user-username').textContent = authUser.username;
-  document.getElementById('welcome-name').textContent = authUser.username;
-  
-  // Handle logout
-  document.getElementById('logout-btn').addEventListener('click', function() {
-    // Clear authentication data
-    localStorage.removeItem("authUser");
-    sessionStorage.removeItem("authUser");
+    function renderUploadSection() {
+
+      document.getElementById('app').innerHTML = `
+        <!-- Project Reports Upload Section -->
+        <div class="row mb-4">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header">
+                <h5><i class="fas fa-upload me-2"></i>Upload Project Reports</h5>
+              </div>
+              <div class="card-body">
+                <div class="mb-3">
+                  <label for="typeSelect" class="form-label">Select What to Upload</label>
+                  <select class="form-select" id="typeSelect">
+                    <option selected>Choose a upload type...</option>
+                    <option value="1">Accomplishment</option>
+                    <option value="2">Project</option>
+                  </select>
+                </div>
+              
+                  ${uploadType === "project" ? `
+                <div class="mb-3">
+                  <label for="projectSelect" class="form-label">Select Project</label>
+                  <select class="form-select" id="projectSelect">
+                    <option selected>Choose a project...</option>
+                    <option value="1">Youth Leadership Program</option>
+                    <option value="2">Community Clean-up Drive</option>
+                    <option value="3">Sports Tournament</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="reportType" class="form-label">Report Type</label>
+                  <select class="form-select" id="reportType">
+                    <option selected>Choose report type...</option>
+                    <option value="progress">Progress Report</option>
+                    <option value="financial">Financial Report</option>
+                    <option value="completion">Completion Report</option>
+                    <option value="evaluation">Evaluation Report</option>
+                  </select>
+                </div>
+       ` : ""} 
+
+                
+                <div class="file-upload-container" id="drag-drop-area">
+                  <i class="fas fa-file-upload fa-3x mb-3 text-primary"></i>
+                  <h5>Drag & Drop Files Here</h5>
+                  <p class="text-muted">or</p>
+                  <button class="btn btn-primary" id="browse-files">Browse Files</button>
+                  <input type="file" id="file-input" style="display: none;" multiple>
+                  <p class="mt-2 text-muted small">Supported formats: PDF, DOC, DOCX, XLS, XLSX, JPG, PNG (Max size: 10MB)</p>
+                </div>
+                
+                <div id="selected-files" class="mb-3"></div>
+                
+                <div class="mb-3">
+                  <label for="comments" class="form-label">Description</label>
+                  <textarea class="form-control" id="description" rows="3" placeholder="Add any description about this accomplishment or project..."></textarea>
+                </div>
+                
+                <button class="btn btn-success" id="submit-report">
+                  <i class="fas fa-paper-plane me-2"></i>Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      `;
+
+      // Add event listener to the typeSelect dropdown
+      const typeSelect = document.getElementById('typeSelect');
+      typeSelect.addEventListener('change', function() {
+          const selectedValue = typeSelect.value;
+          renderUploadSection(); // Re-render the section with the new value
+      });
+
+      // Initialize file upload functionality
+      initFileUpload();
+    }
+
+    renderUploadSection();
     
-    // Redirect to login page
-    window.location.href = "/index.html";
-  });
-  
-  // Initialize file upload functionality
-  initFileUpload();
-  
-  // Initialize project cards functionality
-  initProjectCards();
-}
+    // Initialize project cards functionality
+    initProjectCards();
+})
 
 // File upload functionality
-function initFileUpload() {
+export function initFileUpload() {
   const dragDropArea = document.getElementById('drag-drop-area');
   const fileInput = document.getElementById('file-input');
   const browseFilesBtn = document.getElementById('browse-files');
@@ -190,7 +251,7 @@ function initFileUpload() {
 }
 
 // Project cards functionality
-function initProjectCards() {
+export function initProjectCards() {
   // Add click handler for "Upload Report" buttons on project cards
   const uploadButtons = document.querySelectorAll('.btn-outline-success');
   
