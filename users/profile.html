@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SKFMS - User Upload</title>
+    <title>SKMS - User Profile</title>
   </head>
   <body>
     <!-- Navigation Bar -->
@@ -45,10 +45,21 @@
       </div>
     </nav> 
 
-    <div id='app' class="container">
-
+    <!-- Main Content -->
+    <div class="container">
+      <!-- Welcome Section -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <h4 class="card-title">Welcome, <span id="welcome-name">User</span>!</h4>
+              <p class="card-text">Track your projects, upload reports, and monitor progress all in one place.</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <script type="module" src="/src/users/upload.js"></script>
+     
+    <script type="module" src="/src/users/profile.js"></script>
   </body>
 </html>
