@@ -49,8 +49,14 @@ To get started with the SK Monitoring System, follow these steps:
 To use the SK Monitoring System:
 
 1. Open `http://127.0.0.1:3000` in your web browser after starting the development server.
-2. Explore the interface to monitor the system's metrics.
-3. Customize the HTML and CSS as needed to fit your requirements.
+2. Once the login system is shown, you must either login as a user: 
+```
+username: user1
+password: pass1
+```
+
+ Or an admin.
+ 3. After you logged in as a user, you can freely explore the UI or upload anything.
 
 ## Contributing
 
