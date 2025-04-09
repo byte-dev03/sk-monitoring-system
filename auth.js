@@ -1,11 +1,3 @@
-import "./style.css";
-
-// Mock user database (in a real app, this would be on the server)
-// const users = [
-//   { username: "user1", password: "pass1" },
-//   { username: "admin", password: "admin123" },
-// ];
-
 // DOM elements
 const loginForm = document.getElementById("login-form");
 const loginSection = document.getElementById("login-section");
@@ -31,21 +23,17 @@ loginForm.addEventListener("submit", async (e) => {
   }
 
   try {
-    const response = await fetch("http://localhost:3000/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password })
-    });
+    // Fetch users data from users.json
+    const response = await fetch('./data/users.json');
+    const users = await response.json();
 
-    const result = await response.json();
-    console.log(result);
-  
-    if (response.ok) {
+    // Check if the username and password match any user
+    const user = users.find(user => user.username === username && user.password === password);
+
+    if (user) {
       // Store auth info
       const authData = {
-        username: result.username,
+        username: user.username,
         remembered: rememberMe.checked,
         timestamp: new Date().getTime(),
       };
@@ -60,69 +48,36 @@ loginForm.addEventListener("submit", async (e) => {
 
       // Show dashboard after brief delay
       setTimeout(() => {
-        if (result.username === "admin") {
+        if (user.username === "admin") {
           window.location.href = "/admin/index.html";
         } else {
           window.location.href = "/users/index.html";
         }
       }, 1500);
     } else {
-      showMessage(result.message || "Invalid username or password", "danger");
+      showMessage("Invalid username or password", "danger");
     }
   } catch (error) {
     console.log("Login error: ", error);
-    showMessage("Server error. Please try again later.", "danger");
+    showMessage("Error fetching user data. Please try again later.", "danger");
   }
-
-
 });
 
 // Check if user is already logged in
-async function checkAuthStatus() {
-  // Check both localStorage and sessionStorage
+function checkAuthStatus() {
   const authUser =
     JSON.parse(localStorage.getItem("authUser")) ||
     JSON.parse(sessionStorage.getItem("authUser"));
 
-  if (!authUser) {
-    showLoginForm();
-    return;
-  }
-
-  try {
-    const response = await fetch("http://localhost:3000/api/session", {
-      method: "GET",
-      credentials: "include"
-    });
-
-    const result = await response.json();
-
-    if (response.ok && result.isAuthenticated) {
-      // Optional: Check if the session has expired (if you want to implement session timeout)
-      const currentTime = new Date().getTime();
-      const sessionTime = authUser.timestamp;
-      const sessionTimeout = 1000 * 60 * 30; // 30 minutes
-
-      if (currentTime - sessionTime > sessionTimeout && !authUser.remembered) {
-        // Session expired
-        sessionStorage.removeItem("authUser");
-        showLoginForm();
-      } else {
-        if (authUser.username === "admin") {
-          window.location.href = "/admin/index.html";
-        } else {
-          window.location.href = "/users/index.html";
-        }
-      }
+  if (authUser) {
+    // Redirect to the appropriate dashboard
+    if (authUser.username === "admin") {
+      window.location.href = "/admin/index.html";
     } else {
-      // Session isnt valid on the server
-      localStorage.removeItem("authUser");
-      sessionStorage.removeItem("authUser");
-      showLoginForm();
+      window.location.href = "/users/index.html";
     }
-  } catch (error) {
-    console.error("Error verifying session:", error);
-    showMessage("Server error. Please try again later.", "danger");
+  } else {
+    showLoginForm();
   }
 }
 
@@ -133,7 +88,7 @@ function showLoginForm() {
   messageDiv.innerHTML = "";
 }
 
-// Show mkssage to user
+// Show message to user
 function showMessage(message, type) {
   messageDiv.innerHTML = `
         <div class="alert alert-${type} alert-dismissible fade show" role="alert">
@@ -142,3 +97,4 @@ function showMessage(message, type) {
         </div>
     `;
 }
+

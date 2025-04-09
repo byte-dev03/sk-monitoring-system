@@ -1,7 +1,3 @@
-import "./style.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.min.js";
-
 export function togglePassword() {
   const pwd = document.getElementById("password");
   const type = pwd.type === "password" ? "text" : "password";

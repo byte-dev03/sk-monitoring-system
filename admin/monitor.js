@@ -1,15 +1,10 @@
-import "./admin.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-
-
 export async function initDropdown() {
   const input = document.getElementById("barangay-input");
   const list = document.getElementById("barangay-list");
 
   if (!input || !list) throw new Error("Input or list element not found");
 
-  const res = await fetch("http://localhost:3000/api/barangays");
+  const res = await fetch("../data/barangays.json");
   if (!res.ok) throw new Error(`Failed to load barangays (${res.status})`);
   const allBarangays = await res.json();
 
@@ -68,25 +63,21 @@ export function initSidebar() {
 }
 
 export async function initDashboardData() {
-  const input = document.getElementById("barangay-input");  // Assuming this is the input for searching barangays
+  const input = document.getElementById("barangay-input");  // Input for searching barangays
   const list = document.getElementById("barangay-list");    // The list of filtered barangays
   const detail = document.getElementById("barangay-detail"); // The detail section where info will be shown
 
   if (!input || !list || !detail) throw new Error("Missing #barangay-input, #barangay-list or #barangay-detail");
 
-  // Fetch the list of barangays from the server
-  const res = await fetch("http://localhost:3000/api/barangays");
+  // Fetch the list of barangays from the local JSON file
+  const res = await fetch("../data/barangays.json");
   if (!res.ok) throw new Error(`Failed to load barangays (${res.status})`);
   const allBarangays = await res.json();
 
   const defaultBarangay = allBarangays[0];
 
-  
-  // 3) Fetch & render its detail card
-  const detailRes = await fetch(`http://localhost:3000/api/barangays/${defaultBarangay.id}`);
-  const defaultData = await detailRes.json();
-  renderDetail(defaultData);
-
+  // Render the default barangay's detail card
+  renderDetail(defaultBarangay);
 
   // The input event to filter the barangays
   input.addEventListener("input", () => {
@@ -120,13 +111,11 @@ export async function initDashboardData() {
     if (selectedBarangay && selectedBarangay.tagName === "LI") {
       const barangayId = selectedBarangay.getAttribute("data-id");
 
-      try {
-        const res = await fetch(`http://localhost:3000/api/barangays/${barangayId}`);
-        if (!res.ok) throw new Error(`Error fetching barangay ${barangayId}: ${res.status}`);
-        const b = await res.json();
-        renderDetail(b);
-      } catch (err) {
-        console.error(err);
+      // Find the selected barangay from the local data
+      const selectedBarangayData = allBarangays.find(b => b.id == barangayId);
+      if (selectedBarangayData) {
+        renderDetail(selectedBarangayData);
+      } else {
         detail.innerHTML = `<div class="alert alert-danger">Failed to load data.</div>`;
       }
     }
