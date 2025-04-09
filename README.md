@@ -32,42 +32,23 @@ To get started with the SK Monitoring System, follow these steps:
    cd sk-monitoring-system
    ```
 
-2. **Install the dependencies:**
-
-   Make sure you have [Node.js](https://nodejs.org/) installed. Then run:
-
-   ```bash
-   npm install
-   ```
-
-3. **Start the development server:**
-
-   The project uses [Vite](https://vitejs.dev/) as the development server. To start the server, run:
-
-   ```bash
-   npm run dev
-   ```
-4. **Get the repository for the backend server:**
-    The project doesnt include the code for the backend and is separated from it. To get the backend server code/repository, run:
+2. ***Run the live server:**
+    Once inside the repository, to open the project in a web browser, you must first need to start a server using `live-server` or any other ways to start a server, but with live-server, you must run this to continue:
     ```bash
-    git clone https://github.com/byte-dev03/skms-backend
-    # then
-    cd skms-backend
-    # after than run 
-    npm install # to install the required libraries
-    # and lastly run:
-    npm run start # to start the backend server
+    live-server --port=3000
     ```
+
+    Then `live-server` would automatically open the website in a browser.
 
 4. **Open the application in your browser:**
 
-   After starting the vite server ***and*** the backend server, open your browser and navigate to `http://localhost:5173` to view the application.
+   After starting the vite server ***and*** the backend server, open your browser and navigate to `http://127.0.0.1:3000` to view the application.
 
 ## Usage
 
 To use the SK Monitoring System:
 
-1. Open `http://localhost:5173` in your web browser after starting the development server.
+1. Open `http://127.0.0.1:3000` in your web browser after starting the development server.
 2. Explore the interface to monitor the system's metrics.
 3. Customize the HTML and CSS as needed to fit your requirements.
 
