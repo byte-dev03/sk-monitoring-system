@@ -1,7 +1,3 @@
-Sure! Here are the instructions for starting the Vite server and installing dependencies using npm, which can be added to the README file:
-
----
-
 # SK Monitoring System
 
 A sk monitoring system made with HTML and Bootstrap.
