@@ -290,11 +290,11 @@ export function initProjectCards() {
         }
       }
 
-      // Scroll to upload form
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+      // // Scroll to upload form
+      // window.scrollTo({
+      //   top: 0,
+      //   behavior: "smooth",
+      // });
 
       // Focus on report type dropdown
       document.getElementById("reportType").focus();

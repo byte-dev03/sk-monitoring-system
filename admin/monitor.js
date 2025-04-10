@@ -118,7 +118,7 @@ export async function initDashboardData() {
 }
 function renderDetail(b) {
   document.getElementById("barangay-detail").innerHTML = `
-    <div class="card shadow-sm">
+    <div class="card shadow-sm" style="transition: 1s linear">
       <div class="card-header d-flex justify-content-between">
         <h5>${b.name}</h5>
       </div>
