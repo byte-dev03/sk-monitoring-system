@@ -74,11 +74,6 @@ export async function initDashboardData() {
   if (!res.ok) throw new Error(`Failed to load barangays (${res.status})`);
   const allBarangays = await res.json();
 
-  const defaultBarangay = allBarangays[0];
-
-  // Render the default barangay's detail card
-  renderDetail(defaultBarangay);
-
   // The input event to filter the barangays
   input.addEventListener("input", () => {
     const search = input.value.toLowerCase();
