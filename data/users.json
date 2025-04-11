@@ -1,11 +1,17 @@
 [
   {
     "username": "admin",
-    "password": "admin1",
+    "password": "admin",
     "role": "admin"
   },
   {
-    "username": "user1",
-    "password": "pass1"
+    "username": "mjhon",
+    "password": "jhonm06",
+    "info": {
+      "assigned_barangay": "San Jose",
+      "contact_number": "09350265173",
+      "name": "Jhon Manalatas",
+      "position": "SK Chairperson"
+    }
   }
 ]

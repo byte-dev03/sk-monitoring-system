@@ -105,7 +105,7 @@ export function initFileUpload() {
   submitReportBtn.addEventListener("click", () => {
     const projectSelect = document.getElementById("projectSelect");
     const reportType = document.getElementById("reportType");
-    const comments = document.getElementById("comments");
+    const description = document.getElementById("description");
 
     if (projectSelect.value === "Choose a project...") {
       alert("Please select a project.");
@@ -123,9 +123,10 @@ export function initFileUpload() {
     }
 
     const formData = new FormData();
-    formData.append("project", projectSelect.value);
+    formData.append("project", projectSelect.options[projectSelect.selectedIndex].text);
     formData.append("reportType", reportType.value);
-    formData.append("comments", comments.value);
+    formData.append("description", description.value);
+    console.log(formData);
 
     for (let i = 0; i < uploadedFiles.length; i++) {
       formData.append("files", uploadedFiles[i]);
@@ -145,7 +146,7 @@ export function initFileUpload() {
     // Reset form
     projectSelect.selectedIndex = 0;
     reportType.selectedIndex = 0;
-    comments.value = "";
+    description.value = "";
     uploadedFiles = [];
     selectedFilesDiv.innerHTML = "";
   });
