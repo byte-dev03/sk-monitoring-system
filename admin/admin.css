@@ -32,6 +32,17 @@ body {
 .project-card {
   margin-bottom: 20px;
 }
+
+#sidebar {
+  position: fixed;
+  height: 100%;
+  overflow-y: auto;
+}
+
+#search-icon {
+  position: absolute;
+  left: 547px;
+}
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
@@ -42,4 +53,14 @@ body {
   .main-content {
     margin-left: 0;
   }
+
+  #search-icon {
+    position: absolute;
+    left: 30px;
+  }
 }
+
+#barangay-input {
+  text-indent: 15px;
+}
+

@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -11,69 +11,34 @@
         <title>SK Monitoring System - Login</title>
     </head>
     <body class="d-flex justify-content-center align-items-center vh-100">
-        <div class="container d-flex justify-content-center align-items-center">
-            <div
-                id="header"
-                class="d-flex flex-column justify-content-center align-items-center -mt-10"
-            >
-                <img id="logo" src="./public/sk-logo.svg" alt="sk-logo" />
-                <h2 class="text-white">SK Monitoring System</h2>
+        <div id='app' class="container d-flex flex-column justify-content-center align-items-center">
+            <div id="header" class="text-center">
+                <img id="logo" class="img-fluid w-50 mb-3" src="./public/sk-logo.png" alt="sk-logo" />
+                <h3 class="text-black mb-3" id="title">SK Federation Monitoring System</h3>
             </div>
 
             <!-- Login Form -->
-            <div
-                id="login-section"
-                class="card shadow p-4"
-                style="max-width: 400px; width: 100%"
-            >
+            <div id="login-section" class="card shadow p-4 w-100" style="max-width: 400px;">
                 <h2 class="text-center mb-4">Login</h2>
                 <div id="message"></div>
                 <form id="login-form" class="needs-validation" novalidate>
                     <div class="form-floating mb-3">
-                        <input
-                            type="text"
-                            class="form-control"
-                            id="username"
-                            required
-                        />
+                        <input type="text" class="form-control" id="username" required />
                         <label for="username">Username</label>
-                        <div class="invalid-feedback">
-                            Please enter your username.
-                        </div>
+                        <div class="invalid-feedback">Please enter your username.</div>
                     </div>
                     <div class="form-floating mb-3 position-relative">
-                        <input
-                            type="password"
-                            class="form-control"
-                            id="password"
-                            required
-                        />
+                        <input type="password" class="form-control" id="password" required />
                         <label for="password">Password</label>
-                        <button
-                            type="button"
-                            class="btn btn-sm btn-outline-secondary position-absolute end-0 top-0 mt-2 me-2"
-                            id="show-btn"
-                        >
-                            Show
-                        </button>
-                        <div class="invalid-feedback">
-                            Please enter your password.
-                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-secondary position-absolute end-0 top-0 mt-2 me-2" id="show-btn">Show</button>
+                        <div class="invalid-feedback">Please enter your password.</div>
                     </div>
                     <div class="mb-3 form-check">
-                        <input
-                            type="checkbox"
-                            class="form-check-input"
-                            id="remember-me"
-                        />
-                        <label class="form-check-label" for="remember-me"
-                            >Remember me</label
-                        >
+                        <input type="checkbox" class="form-check-input" id="remember-me" />
+                        <label class="form-check-label" for="remember-me">Remember me</label>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">
-                            Login
-                        </button>
+                        <button type="submit" class="btn btn-primary">Login</button>
                     </div>
                 </form>
             </div>
