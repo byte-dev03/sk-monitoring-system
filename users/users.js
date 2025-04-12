@@ -29,8 +29,22 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "/index.html";
   });
 
-  // Setup the upload UI for the user's dashboard
-  renderUploadUI("#uploadModal .modal-body");
+
+  if (window.location.href.includes("index.html")) {
+    // Event listener for adding a new accomplishment
+    document.querySelector("#newAccomplishment").addEventListener("click", () => {
+      addNew("accomplishment");
+    });
+
+    // Event listener for adding a new project
+    document.querySelector("#newProject").addEventListener("click", () => {
+      addNew("project");
+    });
+
+      // Setup the upload UI for the user's dashboard
+      renderUploadUI("#uploadModal .modal-body");
+  }
+
 });
 
 const handleInputChange = (event) => {
@@ -62,7 +76,7 @@ export function addNew(type) {
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
-            <div class="form-group mb-3 col-md-10 w-75 mx-auto">
+            <form class="form-group needs-validation" novalidate>
               <div class="form-floating mb-3">
                 <input id='title' class="form-control form-floating mt-2" type="text" placeholder="Add title...">
                 <label for='title' class='form-label'>Title</label>
@@ -71,16 +85,25 @@ export function addNew(type) {
               <div class="form-floating mb-3">
                 <textarea id='desc' rows="4" class="form-control" placeholder="Add description..."></textarea>
                 <label for='desc' class='form-label'>Description</label>
+                <div class="invalid-feedback">
+                  Please provide a description.
+                </div>
               </div>
 
               <div class="form-group mt-2 mb-3">
               <div class="form-floating mb-3">
                 <input id="start-date" type="date" class="form-control text-center">
                 <label class="form-label" for="start-date">Start Date</label>
+                <div class="invalid-feedback">
+                  Please provide a start date.
+                </div>
               </div>
               <div class="form-floating mb-3">
                 <input id="end-date" type="date" class="form-control text-center">
                 <label class="form-label mt-2" for="start-date">End Date</label>
+                <div class="invalid-feedback">
+                  Please provide an end date.
+                </div>
               </div>
 
               <button id='submit-form' type="submit" class="btn btn-primary col-12" >Submit</button>
@@ -95,15 +118,21 @@ export function addNew(type) {
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
-            <div class="mb-3 col-md-10 mx-auto">
+            <form class="form-group needs-validation" novalidate>
               <div class="form-floating mb-3 w-100 w-md-50 mx-auto">
                 <input id='title' class="form-control form-floating mt-2" type="text" placeholder="Add title...">
                 <label for='title' class='form-label'>Title</label>
+                <div class="invalid-feedback">
+                  Please provide a title.
+                </div>
               </div>
 
               <div class="form-floating mb-3 w-100 w-md-50 mx-auto">
                 <textarea id='desc' rows="4" class="form-control" placeholder="Add description..."></textarea>
                 <label for='desc' class='form-label'>Description</label>
+                <div class="invalid-feedback">
+                  Please provide a description.
+                </div>
               </div>
       
               <div class="d-flex flex-column justify-content-center align-items-center mt-5">
@@ -114,7 +143,11 @@ export function addNew(type) {
                 <div class='preview-container d-none'>
                   <image class="img-fluid rounded shadow" id="preview" alt="Preview Image">
                 </div>
+                <div class="invalid-feedback">
+                  Please provide an image.
+                </div>
               </div>
+              <button id='submit-form' type="submit" class="btn btn-primary col-12" >Submit</button>
             </div>
           </div>
         </div>
@@ -160,7 +193,8 @@ export function addNew(type) {
       formData.append("description", descInput.value);
       formData.append("start_date", startDateInput.value);
       formData.append("end_date", endDateInput.value);
-      console.log(formData);
+
+      createNewProject(formData);
     });
 
     titleInput.value = "";
@@ -178,6 +212,91 @@ export function addNew(type) {
   modalElement.addEventListener("hidden.bs.modal", function () {
     modalElement.remove();
   });
+}
+
+function createNewProject(projectData) {
+  const container = document.getElementById('project-cards');
+  const fragment = document.createDocumentFragment();
+  const progress = projectData.progress ?? 0;
+
+  // Outer column
+  const col = document.createElement('div');
+  col.className = 'col-md-6 col-lg-4';
+
+  // Card
+  const card = document.createElement('div');
+  card.className = 'card project-card';
+
+  // Status badge
+  const badge = document.createElement('span');
+  badge.className = `badge ${progress === 100 ? 'bg-success' : 'bg-warning'} status-badge`;
+  badge.textContent = progress === 100 ? 'Completed' : 'In Progress';
+
+  // Card body
+  const body = document.createElement('div');
+  body.className = 'card-body';
+
+  const title = document.createElement('h5');
+  title.className = 'card-title';
+  title.textContent = projectData.title;
+
+  const desc = document.createElement('p');
+  desc.className = 'card-text';
+  desc.textContent = projectData.description;
+
+  // Progress label
+  const progressRow = document.createElement('div');
+  progressRow.className = 'd-flex justify-content-between mb-1';
+  progressRow.innerHTML = `
+    <small>Progress</small>
+    <small>${progress}%</small>
+  `;
+
+  // Progress bar
+  const progWrapper = document.createElement('div');
+  progWrapper.className = 'progress';
+  const progBar = document.createElement('div');
+  progBar.className = 'progress-bar';
+  progBar.setAttribute('role', 'progressbar');
+  progBar.setAttribute('aria-valuemin', '0');
+  progBar.setAttribute('aria-valuemax', '100');
+  progBar.setAttribute('aria-valuenow', progress);
+  progBar.style.width = `${progress}%`;
+  progWrapper.appendChild(progBar);
+
+  // Deadline
+  const deadline = document.createElement('div');
+  deadline.className = 'mt-3';
+  deadline.innerHTML = `
+    <small class="text-muted">
+      <i class="fas fa-calendar me-1"></i>
+      Deadline: ${projectData.end_date}
+    </small>
+  `;
+
+  // Actions
+  const actions = document.createElement('div');
+  actions.className = 'mt-3';
+  actions.innerHTML = `
+    <a href="#" class="btn btn-sm btn-outline-primary me-1">
+      <i class="fas fa-eye me-1"></i>View
+    </a>
+    <a class="btn btn-sm btn-outline-success"
+       data-bs-toggle="modal"
+       data-bs-target="#uploadModal">
+      <i class="fas fa-upload me-1"></i>Upload Report
+    </a>
+  `;
+
+  // Assemble
+  card.appendChild(badge);
+  body.append(title, desc, progressRow, progWrapper, deadline, actions);
+  card.appendChild(body);
+  col.appendChild(card);
+  fragment.appendChild(col);
+
+  // One single insert
+  container.appendChild(fragment);
 }
 
 function populateHeader(header) {
@@ -205,7 +324,7 @@ function populateHeader(header) {
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>
-                  <a class="dropdown-item" href="#" id="logout-btn"><i class="fas fa-sign-out-alt me-2
+                  <a class="dropdown-item" href="#" id="logout-btn"><i class="fas fa-sign-out-alt me-2"
                     ></i>Logout</a>
                 </li>
               </ul>
@@ -217,12 +336,3 @@ function populateHeader(header) {
   `;
 }
 
-// Event listener for adding a new accomplishment
-document.querySelector("#newAccomplishment").addEventListener("click", () => {
-  addNew("accomplishment");
-});
-
-// Event listener for adding a new project
-document.querySelector("#newProject").addEventListener("click", () => {
-  addNew("project");
-});

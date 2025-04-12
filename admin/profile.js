@@ -1,9 +1,9 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     const profile = document.getElementById('profile');
-   
-    const userData = getUserData();
 
-    userData.then(data => {
+    const userData = await getUserData();
+    console.log(userData);
+    userData.map((data) => {
         if (data) {
             populateProfile(data);
         } else {
@@ -26,11 +26,9 @@ async function getUserData() {
 }
     // Populate profile with user data
     function populateProfile(data) {
-        for (const d of data) {
-        if (d.username != "admin") {
-            document.getElementById('name').textContent = d.info.name;
-            document.getElementById('position').textContent = d.info.position;
-            document.getElementById('contact-number').textContent = d.info.contact_number;
+        if (data.username == "admin") {
+            document.getElementById('name').textContent = data.info.name;
+        document.getElementById('position').textContent = data.info.position;
         }
-    }
+        
     }

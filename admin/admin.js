@@ -17,46 +17,19 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "/index.html";
   });
 
-  const darkModeToggle = document.getElementById('darkmode-toggle');
-  const toggleIcon = document.getElementById('toggle-icon');
-  
-  // On load, apply saved theme
-  const savedTheme = localStorage.getItem("theme") || "light";
-  document.documentElement.setAttribute("data-bs-theme", savedTheme);
-  updateToggleUI(savedTheme);
-
-  // On click, toggle and save
-  darkModeToggle.addEventListener("click", () => {
-    const currentTheme = document.documentElement.getAttribute("data-bs-theme");
-    const newTheme = currentTheme === "dark" ? "light" : "dark";
-    document.documentElement.setAttribute("data-bs-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
-    updateToggleUI(newTheme);
-  });
-
-  function updateToggleUI(theme) {
-    if (theme === "dark") {
-      darkModeToggle.classList.remove("bg-dark");
-      darkModeToggle.classList.add("bg-light");
-      darkModeToggle.classList.add('text-light');
-      toggleIcon.classList.remove("fa-moon");
-      toggleIcon.classList.add("fa-sun");
-    } else {
-      darkModeToggle.classList.remove("bg-light");
-      darkModeToggle.classList.add("bg-dark");
-      toggleIcon.classList.remove("fa-sun");
-      toggleIcon.classList.add("fa-moon");
-    }
-  }
   // 3. Sidebar links
   initSidebar();
 
-  // 4. Barangay dropdown + dashboard
+  // Check if in admin dashboard
+  if (window.location.href.includes("index.html")) {
+    // 4. Barangay dropdown + dashboard
   initDropdown()
-    .then(() => initDashboardData())
-    .catch((err) => console.error("Failed to init dashboard:", err));
+  .then(() => initDashboardData())
+  .catch((err) => console.error("Failed to init dashboard:", err));
 
-  initBarangayOverview();
+initBarangayOverview();
+  }
+  
 });
 
 async function initBarangayOverview() {

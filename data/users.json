@@ -2,7 +2,10 @@
   {
     "username": "admin",
     "password": "admin",
-    "role": "admin"
+    "info":{
+      "name": "Admin",
+      "position": "Administrator"
+    }
   },
   {
     "username": "user1",
