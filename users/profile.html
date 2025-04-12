@@ -15,31 +15,23 @@
 </head>
 
 <body>
-  <header id='header'>
+  <header id="header">
   </header>
-  <!-- Main Content -->
-  <div class="container">
-    <!-- Welcome Section -->
-    <div class="row mb-4">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">
-              Welcome, <span id="welcome-name">User</span>!
-            </h4>
-            <p class="card-text">
-              Track your projects, upload reports, and monitor
-              progress all in one place.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <main class="d-flex flex-column justify-content-center align-items-center">
-    <div id='info' class='card'>
-      <h1>User Profile</h1>
+    <h1>User Profile</h1>
+    <div id="info" class="card rounded p-2">
+      <div class="d-flex justify-content-center align-items-center">
+        <div class="mx-auto">
+          <img id="user-logo" class="img-fluid rounded w-75 h-50" src="https://cdn.glitch.global/c226a666-5d79-40e3-bfa5-46a78a90ae3e/user-logo.jpg?v=1744368971414" alt="user-logo" />
+        </div>
+
+        <div id="user-info" class="mb-4 text-left ">
+          <h4 class="text-decoration-underline">Position: <span id="position">SK Member</span></h4>
+          <h4 class="text-decoration-underline">Name: <span id="name">Jhon Manalastas</span></h4>
+          <h4 class="text-decoration-underline">Barangay: <span id="barangay">San Jose</span></h4>
+        </div>
+      </div>
     </div>
     <button class="btn btn-danger">Log Out</button>
   </main>

@@ -7,15 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
     JSON.parse(sessionStorage.getItem("authUser"));
 
   if (!authUser) {
-    window.location.href = "/index.html"; // redirect to login
-    return; // Ensure no further code runs after redirect
+    return void (window.location.href = "../index.html");
   }
 
   console.log("Logged in as:", authUser.username);
 
   // Dynamically add navbar to each user's routes
-  const headers = document.getElementsByTagName('header');
-  Array.from(headers).forEach(header => populateHeader(header));
+  const headers = document.getElementsByTagName("header");
+  Array.from(headers).forEach((header) => populateHeader(header));
 
   // Set user information in the UI
   document.getElementById("user-username").textContent = authUser.username;
@@ -36,27 +35,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const handleInputChange = (event) => {
   const file = event.target.files[0];
-  const preview = document.getElementById('preview');
-  const previewContainer = document.querySelector('.preview-container');
+  const preview = document.getElementById("preview");
+  const previewContainer = document.querySelector(".preview-container");
 
   if (file) {
     let reader = new FileReader();
-    reader.onload = function(e) {
+    reader.onload = function (e) {
       preview.src = e.target.result;
-      previewContainer.classList.remove('d-none');
-    }
+      previewContainer.classList.remove("d-none");
+    };
     reader.readAsDataURL(file);
   } else {
-    previewContainer.classList.add('d-none');
+    previewContainer.classList.add("d-none");
   }
-
-}
+};
 
 // Function to add new project or accomplishment based on type
 export function addNew(type) {
-  const title = type === "project" ? "Add new project" : "Add new accomplishment";
+  const title =
+    type === "project" ? "Add new project" : "Add new accomplishment";
   const modalClass = type === "project" ? "modal" : "modal-lg";
-  const content = type === "project" ? `
+  const content =
+    type === "project"
+      ? `
     <div class="row mb-4">
       <div class="col-md-12">
         <div class="card">
@@ -88,24 +89,25 @@ export function addNew(type) {
         </div>
       </div>
     </div>
-  ` : `
+  `
+      : `
     <div class="row mb-4">
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
             <div class="mb-3 col-md-10 mx-auto">
-              <div class="form-floating mb-3 w-50 mx-auto">
+              <div class="form-floating mb-3 w-100 w-md-50 mx-auto">
                 <input id='title' class="form-control form-floating mt-2" type="text" placeholder="Add title...">
                 <label for='title' class='form-label'>Title</label>
               </div>
 
-              <div class="form-floating mb-3 w-50 mx-auto">
+              <div class="form-floating mb-3 w-100 w-md-50 mx-auto">
                 <textarea id='desc' rows="4" class="form-control" placeholder="Add description..."></textarea>
                 <label for='desc' class='form-label'>Description</label>
               </div>
       
               <div class="d-flex flex-column justify-content-center align-items-center mt-5">
-                <h5>Upload Image about the Accomplishment Activity</h5>
+                <h6 class="text-nowrap">Upload Image about the Accomplishment Activity</h6>
                 <div class="file-upload-container mb-3">
                   <input class="form-control" type="file" accept "image/*" id='image-input'>
                 </div>
@@ -119,7 +121,6 @@ export function addNew(type) {
       </div>
     </div>
   `;
-
 
   const modalHtml = `
     <div class="${modalClass} modal fade" id="newModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -141,18 +142,19 @@ export function addNew(type) {
   `;
 
   // Insert the modal HTML into the body
-  document.body.insertAdjacentHTML('beforeend', modalHtml);
+  document.body.insertAdjacentHTML("beforeend", modalHtml);
   if (type == "accomplishment") {
-    document.querySelector('#image-input').addEventListener('change', handleInputChange);
+    document
+      .querySelector("#image-input")
+      .addEventListener("change", handleInputChange);
   } else {
+    const submitBtn = document.querySelector("#submit-form");
+    const titleInput = document.querySelector("#title");
+    const descInput = document.querySelector("#desc");
+    const startDateInput = document.querySelector("#start-date");
+    const endDateInput = document.querySelector("#end-date");
 
-    const submitBtn = document.querySelector('#submit-form');
-    const titleInput = document.querySelector('#title');
-    const descInput = document.querySelector('#desc');
-    const startDateInput = document.querySelector('#start-date');
-    const endDateInput = document.querySelector('#end-date');
-
-    submitBtn.addEventListener('click', () => {
+    submitBtn.addEventListener("click", () => {
       const formData = new FormData();
       formData.append("title", titleInput.value);
       formData.append("description", descInput.value);
@@ -167,14 +169,13 @@ export function addNew(type) {
     endDateInput.value = "";
   }
 
-
   // Use Bootstrap's modal method to show the modal
-  const modalElement = document.querySelector('#newModal');
+  const modalElement = document.querySelector("#newModal");
   const modal = new bootstrap.Modal(modalElement);
   modal.show();
 
   // Clean up the modal after it is hidden
-  modalElement.addEventListener('hidden.bs.modal', function() {
+  modalElement.addEventListener("hidden.bs.modal", function () {
     modalElement.remove();
   });
 }
@@ -217,13 +218,11 @@ function populateHeader(header) {
 }
 
 // Event listener for adding a new accomplishment
-document.querySelector('#newAccomplishment').addEventListener('click', () => {
-  addNew('accomplishment');
+document.querySelector("#newAccomplishment").addEventListener("click", () => {
+  addNew("accomplishment");
 });
 
 // Event listener for adding a new project
-document.querySelector('#newProject').addEventListener('click', () => {
-  addNew('project');
+document.querySelector("#newProject").addEventListener("click", () => {
+  addNew("project");
 });
-
-

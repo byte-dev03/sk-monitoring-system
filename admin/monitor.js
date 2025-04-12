@@ -4,7 +4,7 @@ export async function initDropdown() {
 
   if (!input || !list) throw new Error("Input or list element not found");
 
-  const res = await fetch("../data/barangays.json");
+  const res = await fetch("../data/sk_federation_data.json");
   if (!res.ok) throw new Error(`Failed to load barangays (${res.status})`);
   const allBarangays = await res.json();
 
@@ -70,7 +70,7 @@ export async function initDashboardData() {
   if (!input || !list || !detail) throw new Error("Missing #barangay-input, #barangay-list or #barangay-detail");
 
   // Fetch the list of barangays from the local JSON file
-  const res = await fetch("../data/barangays.json");
+  const res = await fetch("../data/sk_federation_data.json");
   if (!res.ok) throw new Error(`Failed to load barangays (${res.status})`);
   const allBarangays = await res.json();
 

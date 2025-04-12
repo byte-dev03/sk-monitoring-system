@@ -5,8 +5,8 @@
     "role": "admin"
   },
   {
-    "username": "mjhon",
-    "password": "jhonm06",
+    "username": "user1",
+    "password": "pass1",
     "info": {
       "assigned_barangay": "San Jose",
       "contact_number": "09350265173",

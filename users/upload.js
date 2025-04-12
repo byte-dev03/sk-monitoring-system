@@ -60,7 +60,6 @@ export function renderUploadUI(target) {
   initProjectCards();
 }
 
-
 // File upload functionality
 export function initFileUpload() {
   const dragDropArea = document.getElementById("drag-drop-area");
@@ -123,7 +122,10 @@ export function initFileUpload() {
     }
 
     const formData = new FormData();
-    formData.append("project", projectSelect.options[projectSelect.selectedIndex].text);
+    formData.append(
+      "project",
+      projectSelect.options[projectSelect.selectedIndex].text
+    );
     formData.append("reportType", reportType.value);
     formData.append("description", description.value);
     console.log(formData);
@@ -136,7 +138,9 @@ export function initFileUpload() {
       // Here you would normally send the data to the server
       // For demonstration purposes, we'll just show an alert
       alert(
-        `Report submitted successfully for ${projectSelect.options[projectSelect.selectedIndex].text}!`,
+        `Report submitted successfully for ${
+          projectSelect.options[projectSelect.selectedIndex].text
+        }!`
       );
     } catch (error) {
       console.error(error);
@@ -180,14 +184,14 @@ export function initFileUpload() {
 
       if (!validTypes.includes(file.type)) {
         alert(
-          `File ${file.name} has an invalid type. Please upload only PDF, DOC, DOCX, XLS, XLSX, JPG, or PNG files.`,
+          `File ${file.name} has an invalid type. Please upload only PDF, DOC, DOCX, XLS, XLSX, JPG, or PNG files.`
         );
         continue;
       }
 
       if (file.type.startsWith("image")) {
         alert(
-          `File ${file.name} has an invalid type. Please upload only PDF, DOC, DOCX, XLS, XLSX, JPG, or PNG files.`,
+          `File ${file.name} has an invalid type. Please upload only PDF, DOC, DOCX, XLS, XLSX, JPG, or PNG files.`
         );
         continue;
       }
@@ -200,8 +204,12 @@ export function initFileUpload() {
           const previewElement = document.createElement("div");
           previewElement.className = "image-preview mb-3";
           previewElement.innerHTML = `
-            <img src="${e.target.result}" alt="${file.name}" class="img-thumbnail" style="max-width: 200px">
-            <button class="btn btn-sm btn-danger remove-preview" data-index="${uploadedFiles.length - 1}">
+            <img src="${e.target.result}" alt="${
+            file.name
+          }" class="img-thumbnail" style="max-width: 200px">
+            <button class="btn btn-sm btn-danger remove-preview" data-index="${
+              uploadedFiles.length - 1
+            }">
               <i class="fas fa-times"></i>
             </button>
           `;
@@ -232,9 +240,13 @@ export function initFileUpload() {
       fileElement.innerHTML = `
         <div>
           <i class="${fileIcon} me-2"></i>
-          ${file.name} <span class="text-muted">(${formatFileSize(file.size)})</span>
+          ${file.name} <span class="text-muted">(${formatFileSize(
+        file.size
+      )})</span>
         </div>
-        <button class="btn btn-sm btn-outline-danger remove-file" data-index="${uploadedFiles.length - 1}">
+        <button class="btn btn-sm btn-outline-danger remove-file" data-index="${
+          uploadedFiles.length - 1
+        }">
           <i class="fas fa-times"></i>
         </button>
       `;
@@ -247,7 +259,7 @@ export function initFileUpload() {
     for (const button of removeButtons) {
       button.addEventListener("click", (e) => {
         const index = Number.parseInt(
-          e.currentTarget.getAttribute("data-index"),
+          e.currentTarget.getAttribute("data-index")
         );
         uploadedFiles.splice(index, 1);
         e.currentTarget.parentElement.remove();
