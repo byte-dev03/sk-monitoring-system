@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', async function() {
+document.addEventListener('DOMContentLoaded', async () => {
     const profile = document.getElementById('profile');
 
     const userData = await getUserData();
@@ -26,7 +26,7 @@ async function getUserData() {
 }
     // Populate profile with user data
     function populateProfile(data) {
-        if (data.username == "admin") {
+        if (data.username === "admin") {
             document.getElementById('name').textContent = data.info.name;
         document.getElementById('position').textContent = data.info.position;
         }
