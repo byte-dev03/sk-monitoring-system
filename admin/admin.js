@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     JSON.parse(localStorage.getItem("authUser")) ||
     JSON.parse(sessionStorage.getItem("authUser"));
   if (!authUser) {
-    return void (window.location.href = "../index.html");
+    return void (window.location.href = "index.html");
   }
 
   // 2. Navbar / logout
