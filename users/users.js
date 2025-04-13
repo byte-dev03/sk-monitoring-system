@@ -14,7 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Dynamically add navbar to each user's routes
   const headers = document.getElementsByTagName("header");
+  if (!window.location.href.includes("index.html")) {
   Array.from(headers).forEach((header) => populateHeader(header));
+  }
 
   // Set user information in the UI
   document.getElementById("user-username").textContent = authUser.username;
@@ -43,8 +45,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Setup the upload UI for the user's dashboard
       renderUploadUI("#uploadModal .modal-body");
+  } else if (window.location.href.includes("profile.html")){
+    const backBtn = document.getElementById('back-btn');
+    backBtn.addEventListener('click', ()=> {
+      window.location.href = "index.html"
+    })
   }
-
 });
 
 const handleInputChange = (event) => {
@@ -320,7 +326,7 @@ function populateHeader(header) {
                   <a class="dropdown-item" href="./profile.html"><i class="fas fa-user me-2"></i>Profile</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="#"><i class="fas fa-bell me-2"></i>Notifications</a>
+                  <a id='notifs-btn' class="dropdown-item" href="#" data-bs-toggle="modal" data-target="#notificationModal"><i class="fas fa-bell me-2"></i>Notifications</a>
                 </li>
                 <li><hr class="dropdown-divider" /></li>
                 <li>

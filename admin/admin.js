@@ -35,30 +35,32 @@ initBarangayOverview();
 async function initBarangayOverview() {
   const barangayOverview = document.getElementById("barangay-overview");
 
-  const res = await fetch("../data/barangays.json");
+  const res = await fetch("../data/sk_federation_data.json");
   if (!res.ok) throw new Error(`Failed to load barangays (${res.status})`);
   const allBarangays = await res.json();
 
   barangayOverview.innerHTML = `
-    <table class="table table-hover" style="width: 50%">
-      <thead>
-        <tr>
-          <th scope="col">Barangay</th>
-          <th scope="col">Active Projects</th>
-          <th scope="col">Accomplishments</th>
-        </tr>
-      </thead>
-      <tbody>
-      ${allBarangays.map((b) => {
-        return `
-        <tr>
-          <th scope="row">${b.name}</th>
-          <td>${b.projects.length}</td>
-          <td>${b.accomplishments.length}</td>
-        </tr>
-        `;
-      })}
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover w-full" >
+        <thead>
+          <tr>
+            <th scope="col">Barangay</th>
+            <th scope="col">Active Projects</th>
+            <th scope="col">Accomplishments</th>
+          </tr>
+        </thead>
+        <tbody>
+        ${allBarangays.map((b) => {
+          return `
+          <tr>
+            <th scope="row">${b.name}</th>
+            <td>${b.projects.length}</td>
+            <td>${b.accomplishments.length}</td>
+          </tr>
+          `;
+        })}
+        </tbody>
+      </table>
+    </div>
   `;
 }

@@ -1,34 +1,32 @@
 <!-- Admin profile -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SKMS - Admin Profile</title>
   <link rel="stylesheet" href="./admin.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
     integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css"
-      integrity="sha512-v8QQ0YQ3H4K6Ic3PJkym91KoeNT5S3PnDKvqnwqFD1oiqIl653crGZplPdU5KKtHjO0QKcQ2aUlQZYjHczkmGw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css"
+    integrity="sha512-v8QQ0YQ3H4K6Ic3PJkym91KoeNT5S3PnDKvqnwqFD1oiqIl653crGZplPdU5KKtHjO0QKcQ2aUlQZYjHczkmGw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
   <!-- top navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">sk monitoring system</a>
+      <a class="navbar-brand" href="#">SK Monitoring System</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarnav">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarnav">
         <ul class="navbar-nav ms-auto">
-            <!-- Dashboard Link -->
-        <li class="nav-item">
+          <!-- Dashboard Link -->
+          <li class="nav-item">
             <a class="nav-link" href="./index.html">
               <i class="fas fa-tachometer-alt me-1"></i>Dashboard
             </a>
@@ -40,8 +38,11 @@
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="./profile.html"><i class="fas fa-user-cog me-2"></i>profile</a></li>
               <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>settings</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="#" id="logout-btn"><i class="fas fa-sign-out-alt me-2"></i>logout</a></li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li><a class="dropdown-item" href="#" id="logout-btn"><i class="fas fa-sign-out-alt me-2"></i>logout</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -52,7 +53,7 @@
   <main class="d-flex flex-column justify-content-center align-items-center py-4">
     <h1>ADMIN PROFILE</h1>
     <div id="info" class="card rounded p-4 shadow-sm" style="max-width: 600px; width: 100%;">
-      <div class="d-flex align-items-center gap-4">
+      <div class="d-flex align-items-center gap-4 mx-auto">
         <div>
           <img id="user-logo" class="img-fluid rounded-circle" src="../public/user-logo.jpg" alt="user-logo"
             style="width: 120px; height: 120px; object-fit: cover;" />
@@ -72,4 +73,5 @@
   <script type="module" src="admin.js"></script>
   <script type="module" src="profile.js"></script>
 </body>
+
 </html>
