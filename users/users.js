@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     JSON.parse(sessionStorage.getItem("authUser"));
 
   if (!authUser) {
-    return void (window.location.href = "../index.html");
+    return void (window.location.href = "index.html");
   }
 
   console.log("Logged in as:", authUser.username);
