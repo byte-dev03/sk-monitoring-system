@@ -1653,21 +1653,58 @@
     "projects": [
       {
         "id": 1,
-        "title": "Cultural Night",
-        "start_date": "Mar 30, 2025",
-        "end_date": "Jun 26, 2025",
+        "title": "Youth Leadership Program",
+        "description": "Training and mentorship for youth leaders in the community",
+        "start_date": "2024-01-15",
+        "end_date": "2024-04-30",
+        "status": "Completed",
+        "progress": 100,
+        "updated_at": "2024-04-30"
+      },
+      {
+        "id": 2,
+        "title": "Community Clean-up Drive",
+        "description": "Organizing volunteers for neighborhood clean-up activities",
+        "start_date": "2024-02-01",
+        "end_date": "2024-03-15",
         "status": "Delayed",
-        "progress": "91%",
-        "report_url": "https://cyclic-stormy-spear.glitch.me/reports/San_Jose_project_1.pdf"
+        "progress": 40,
+        "updated_at": "2024-03-10"
+      },
+      {
+        "id": 3,
+        "title": "Sports Tournament",
+        "description": "Organizing local sports competitions for youth engagement",
+        "start_date": "2024-03-01",
+        "end_date": "2024-05-20",
+        "status": "On Track",
+        "progress": 10,
+        "updated_at": "2024-03-15"
       }
     ],
     "accomplishments": [
       {
         "id": 1,
-        "type": "Donation",
-        "description": "134 School Supplies Donated",
-        "completed_at": "Feb 19, 2025",
-        "report_url": "https://cyclic-stormy-spear.glitch.me/reports/San_Jose_accom_1.pdf"
+        "title": "Youth Leadership Training Completion",
+        "description": "Successfully completed the 3-month leadership training program",
+        "completed_at": "2024-04-30",
+        "status": "Completed",
+        "report_url": "/reports/youth-leadership.pdf"
+      },
+      {
+        "id": 2,
+        "title": "Community Clean-up Phase 1",
+        "description": "Completed the first phase of the community clean-up drive",
+        "completed_at": "2024-03-10",
+        "status": "Completed",
+        "report_url": "/reports/cleanup-phase1.pdf"
+      },
+      {
+        "id": 3,
+        "title": "Sports Equipment Donation",
+        "description": "Received and distributed sports equipment for the upcoming tournament",
+        "completed_at": "2024-03-15",
+        "status": "Completed"
       }
     ]
   },
@@ -1728,39 +1765,23 @@
     "projects": [
       {
         "id": 1,
-        "title": "Sports Fest",
-        "start_date": "Mar 15, 2025",
-        "end_date": "May 28, 2025",
-        "status": "Delayed",
-        "progress": "95%",
-        "report_url": "https://cyclic-stormy-spear.glitch.me/reports/San_Vicente_project_1.pdf"
-      },
-      {
-        "id": 2,
-        "title": "Tree Planting",
-        "start_date": "Feb 12, 2025",
-        "end_date": "Mar 13, 2025",
-        "status": "Completed",
-        "progress": "100%",
-        "report_url": "https://cyclic-stormy-spear.glitch.me/reports/San_Vicente_project_2.pdf"
+        "title": "Youth Skills Development",
+        "description": "Technical and vocational training for out-of-school youth",
+        "start_date": "2024-02-01",
+        "end_date": "2024-05-30",
+        "status": "On Track",
+        "progress": 60,
+        "updated_at": "2024-04-15"
       }
     ],
     "accomplishments": [
       {
         "id": 1,
-        "type": "Project",
-        "description": "Community Garden Completed",
-        "completed_at": "Apr 24, 2025",
-        "report_url": "https://cyclic-stormy-spear.glitch.me/reports/San_Vicente_accom_1.pdf",
-        "deadline": "Jun 18, 2025"
-      },
-      {
-        "id": 2,
-        "type": "Project",
-        "description": "Skills Training Completed",
-        "completed_at": "Mar 11, 2025",
-        "report_url": "https://cyclic-stormy-spear.glitch.me/reports/San_Vicente_accom_2.pdf",
-        "deadline": "Apr 28, 2025"
+        "title": "Skills Training Workshop",
+        "description": "Completed the first batch of technical skills training",
+        "completed_at": "2024-04-15",
+        "status": "Completed",
+        "report_url": "/reports/skills-training.pdf"
       }
     ]
   },

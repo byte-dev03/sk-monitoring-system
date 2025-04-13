@@ -1,15 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
 
 body {
-  font-family: "Outfit", sans-serif;
+  font-family: 'Outfit', sans-serif;
+  background-color: #f8f9fa;
 }
 
 .sidebar {
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 100;
+  width: 250px;
+  background-color: #fff;
   padding-top: 60px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -37,21 +35,96 @@ body {
   margin-bottom: 20px;
 }
 
-#sidebar {
-  position: fixed;
-  height: 100%;
-  overflow-y: auto;
+/* Timeline Styles */
+.timeline {
+  position: relative;
+  padding: 20px 0;
 }
 
-#search-icon {
+.timeline::before {
+  content: '';
   position: absolute;
-  left: 547px;
+  left: 20px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: #e9ecef;
 }
 
+.timeline-item {
+  position: relative;
+  padding-left: 50px;
+  margin-bottom: 30px;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: 12px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px;
+}
+
+.timeline-content {
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  border-radius: 8px 8px 0 0 !important;
+}
+
+/* Table Styles */
+.table {
+  margin-bottom: 0;
+}
+
+.table th {
+  font-weight: 600;
+  color: #495057;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+/* Progress Bar */
+.progress {
+  border-radius: 10px;
+  background-color: #e9ecef;
+}
+
+.progress-bar {
+  border-radius: 10px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+/* Badge Styles */
+.badge {
+  font-weight: 500;
+  padding: 5px 10px;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
-    height: auto;
     position: relative;
     padding-top: 0;
   }
@@ -60,16 +133,140 @@ body {
     margin-left: 0;
   }
 
-  #search-icon {
-    position: absolute;
-    left: 30px;
+  .timeline::before {
+    left: 15px;
+  }
+
+  .timeline-item {
+    padding-left: 40px;
+  }
+
+  .timeline-marker {
+    left: 7px;
   }
 }
 
+/* Search Bar Styles */
 #barangay-input {
-  text-indent: 15px;
+  border-radius: 20px;
+  padding-left: 40px;
 }
 
-.table-responsive {
-  max-height: 400px;
+#search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* Recent Activity Styles */
+.recent-activity {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.recent-activity::-webkit-scrollbar {
+  width: 6px;
+}
+
+.recent-activity::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.recent-activity::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.recent-activity::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Profile Page Styles */
+.avatar-circle {
+  width: 120px;
+  height: 120px;
+  background-color: #e9ecef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: #6c757d;
+}
+
+.profile-card {
+  transition: transform 0.3s;
+}
+
+.profile-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Modal Styles */
+.modal-content {
+  border-radius: 8px;
+  border: none;
+}
+
+.modal-header {
+  border-radius: 8px 8px 0 0;
+  background-color: #f8f9fa;
+}
+
+/* Form Styles */
+.form-control {
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Button Styles */
+.btn {
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+  border-color: #0a58ca;
+}
+
+/* Card Styles */
+.card {
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  border-radius: 8px 8px 0 0 !important;
+  background-color: #f8f9fa;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .avatar-circle {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .card-body {
+    padding: 1rem;
+  }
 }

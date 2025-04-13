@@ -5,44 +5,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SKMS - Admin Profile</title>
-  <link rel="stylesheet" href="./admin.css" />
+  <title>Admin Profile - SK Monitoring System</title>
+  <link rel="stylesheet" href="admin.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css"
     integrity="sha512-jnSuA4Ss2PkkikSOLtYs8BlYIeeIK1h99ty4YfvRPAlzr377vr3CXDb7sb7eEEBYjDtcYj+AjBH3FLv5uSJuXg=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css"
-    integrity="sha512-v8QQ0YQ3H4K6Ic3PJkym91KoeNT5S3PnDKvqnwqFD1oiqIl653crGZplPdU5KKtHjO0QKcQ2aUlQZYjHczkmGw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/fontawesome.min.css" integrity="sha512-v8QQ0YQ3H4K6Ic3PJkym91KoeNT5S3PnDKvqnwqFD1oiqIl653crGZplPdU5KKtHjO0QKcQ2aUlQZYjHczkmGw==" crossorigin="anonymous" referrerpolicy="no-referrer" />  
 </head>
 
 <body>
-  <!-- top navbar -->
+  <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
+    <div class="container">
       <a class="navbar-brand" href="#">SK Monitoring System</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarnav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarnav">
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
-          <!-- Dashboard Link -->
           <li class="nav-item">
-            <a class="nav-link" href="./index.html">
-              <i class="fas fa-tachometer-alt me-1"></i>Dashboard
-            </a>
+            <a class="nav-link" href="index.html"><i class="fas fa-home me-1"></i>Dashboard</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardropdown" role="button" data-bs-toggle="dropdown">
-              <i class="fas fa-user-circle me-1"></i><span id="admin-username">admin</span>
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle me-1"></i><span id="admin-username">Admin</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item" href="./profile.html"><i class="fas fa-user-cog me-2"></i>profile</a></li>
-              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>settings</a></li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li><a class="dropdown-item" href="#" id="logout-btn"><i class="fas fa-sign-out-alt me-2"></i>logout</a>
-              </li>
+              <li><a class="dropdown-item active" href="profile.html"><i class="fas fa-user-cog me-2"></i>Profile</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#" id="logout-btn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
             </ul>
           </li>
         </ul>
@@ -50,27 +43,105 @@
     </div>
   </nav>
 
-  <main class="d-flex flex-column justify-content-center align-items-center py-4">
-    <h1>ADMIN PROFILE</h1>
-    <div id="info" class="card rounded p-4 shadow-sm" style="max-width: 600px; width: 100%;">
-      <div class="d-flex align-items-center gap-4 mx-auto">
-        <div>
-          <img id="user-logo" class="img-fluid rounded-circle" src="../public/user-logo.jpg" alt="user-logo"
-            style="width: 120px; height: 120px; object-fit: cover;" />
+  <!-- Profile Content -->
+  <div class="container py-5">
+    <div class="row">
+      <!-- Profile Card -->
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <div class="avatar-circle mb-3">
+              <i class="fas fa-user-shield fa-3x"></i>
+            </div>
+            <h4 id="name" class="mb-1">Admin Name</h4>
+            <p class="text-muted mb-3" id="position">System Administrator</p>
+            <div class="d-grid gap-2">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                <i class="fas fa-edit me-2"></i>Edit Profile
+              </button>
+            </div>
+          </div>
         </div>
-        <div id="user-info" class="text-start">
-          <h4 class="mb-2"><span class="text-decoration-underline">Name:</span> <span id="name"></span></h4>
-          <h4><span class="text-decoration-underline">Position:</span> <span id="position"></span></h4>
+      </div>
+
+      <!-- Profile Details -->
+      <div class="col-md-8">
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Profile Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h6 class="text-muted">Full Name</h6>
+                <p id="name" class="mb-0">Admin Name</p>
+              </div>
+              <div class="col-md-6">
+                <h6 class="text-muted">Position</h6>
+                <p id="position" class="mb-0">System Administrator</p>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h6 class="text-muted">Email</h6>
+                <p class="mb-0">admin@skmonitoring.com</p>
+              </div>
+              <div class="col-md-6">
+                <h6 class="text-muted">Contact Number</h6>
+                <p class="mb-0">+63 912 345 6789</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <h6 class="text-muted">About</h6>
+                <p class="mb-0">System administrator responsible for managing the SK Federation Monitoring System, overseeing barangay activities, and ensuring smooth operation of the platform.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <button class="btn btn-danger mt-3">Log Out</button>
-  </main>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" value="Admin Name">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" value="admin@skmonitoring.com">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Contact Number</label>
+              <input type="tel" class="form-control" value="+63 912 345 6789">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">About</label>
+              <textarea class="form-control" rows="3">System administrator responsible for managing the SK Federation Monitoring System...</textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-  <script type="module" src="admin.js"></script>
   <script type="module" src="profile.js"></script>
 </body>
 
