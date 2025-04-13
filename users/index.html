@@ -98,174 +98,311 @@
         </div>
       </div>
 
-      <!-- Accomplishment Activity Section -->
+      <!-- New Project Modal -->
+      <div class="modal fade" id="newProjectModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><i class="fas fa-plus me-2"></i>New Project</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <form id="newProjectForm">
+                <div class="mb-3">
+                  <label class="form-label">Project Title</label>
+                  <input type="text" class="form-control" name="title" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" name="description" rows="3" required></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">Start Date</label>
+                    <input type="date" class="form-control" name="start_date" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label class="form-label">End Date</label>
+                    <input type="date" class="form-control" name="end_date" required>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Budget (PHP)</label>
+                  <input type="number" class="form-control" name="budget" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Project Type</label>
+                  <select class="form-select" name="type" required>
+                    <option value="">Select Type</option>
+                    <option value="Youth Development">Youth Development</option>
+                    <option value="Community Service">Community Service</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Education">Education</option>
+                    <option value="Health">Health</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" form="newProjectForm" class="btn btn-primary">Create Project</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- New Accomplishment Modal -->
+      <div class="modal fade" id="newAccomplishmentModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><i class="fas fa-check-circle me-2"></i>New Accomplishment</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <form id="newAccomplishmentForm">
+                <div class="mb-3">
+                  <label class="form-label">Title</label>
+                  <input type="text" class="form-control" name="title" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" name="description" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Date Completed</label>
+                  <input type="date" class="form-control" name="completed_at" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Type</label>
+                  <select class="form-select" name="type" required>
+                    <option value="">Select Type</option>
+                    <option value="Project">Project</option>
+                    <option value="Event">Event</option>
+                    <option value="Activity">Activity</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" form="newAccomplishmentForm" class="btn btn-primary">Add Accomplishment</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upload Report Modal -->
+      <div class="modal fade" id="uploadModal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"><i class="fas fa-upload me-2"></i>Upload Report</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <form id="uploadForm">
+                <input type="hidden" id="uploadProjectId" name="projectId">
+                <div class="mb-3">
+                  <label class="form-label">Report File</label>
+                  <input type="file" class="form-control" name="report" accept=".pdf,.doc,.docx" required>
+                  <small class="text-muted">Accepted formats: PDF, DOC, DOCX</small>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Progress Update (%)</label>
+                  <input type="number" class="form-control" name="progress" min="0" max="100" required>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Status</label>
+                  <select class="form-select" name="status" required>
+                    <option value="">Select Status</option>
+                    <option value="On Track">On Track</option>
+                    <option value="Delayed">Delayed</option>
+                    <option value="Completed">Completed</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Remarks</label>
+                  <textarea class="form-control" name="remarks" rows="3"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <button type="submit" form="uploadForm" class="btn btn-primary">Upload Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Accomplishments Section -->
       <div class="row mb-4">
         <div class="col-md-12">
           <div class="d-flex justify-content-between align-items-center">
             <h4 class="mb-3">Accomplishments</h4>
-
             <button type="button" id="newAccomplishment" class="btn btn-primary mb-3">
               <i class="fas fa-plus"></i>
               New
             </button>
           </div>
+        </div>
+        
+        <!-- Accomplishments Cards Container -->
+        <div id="accomplishment-cards" class="row">
+          <!-- Accomplishment cards will be added here -->
+        </div>
+      </div>
 
-          <div class="col-md-6 col-lg-4">
-            <div class="card shadow mb-4"></div>
+      <!-- Projects Section -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="mb-3">Projects</h4>
+
+            <button id="newProject" type="button" class="btn btn-primary mb-3">
+              <i class="fas fa-plus"></i>
+              New
+            </button>
           </div>
         </div>
 
-        <!-- Projects Section -->
-        <div class="row mb-4">
-          <div class="col-md-12">
-            <div class="d-flex justify-content-between align-items-center">
-              <h4 class="mb-3">Projects</h4>
-
-              <button id="newProject" type="button" class="btn btn-primary mb-3">
-                <i class="fas fa-plus"></i>
-                New
-              </button>
-            </div>
-          </div>
-
-          <!-- Project Card 1 -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card project-card">
-              <span class="badge bg-success status-badge">Completed</span>
-              <div class="card-body">
-                <h5 class="card-title">Youth Leadership Program</h5>
-                <p class="card-text">
-                  Training and mentorship for youth leaders in the community.
-                </p>
-                <div class="d-flex justify-content-between mb-1">
-                  <small>Progress</small>
-                  <small>100%</small>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="mt-3">
-                  <small class="text-muted"><i class="fas fa-calendar me-1"></i> Deadline: Apr 30,
-                    2025</small>
-                </div>
-                <div class="mt-3">
-                  <a href="#" class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-eye me-1"></i>View</a>
-                  <a class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#uploadModal"><i
-                      class="fas fa-upload me-1"></i>Upload Report</a>
-                </div>
+        <!-- Project Card 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card project-card">
+            <span class="badge bg-success status-badge">Completed</span>
+            <div class="card-body">
+              <h5 class="card-title">Youth Leadership Program</h5>
+              <p class="card-text">
+                Training and mentorship for youth leaders in the community.
+              </p>
+              <div class="d-flex justify-content-between mb-1">
+                <small>Progress</small>
+                <small>100%</small>
               </div>
-            </div>
-          </div>
-
-          <!-- Project Card 2 -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card project-card">
-              <span class="badge bg-warning status-badge">Delayed</span>
-              <div class="card-body">
-                <h5 class="card-title">Community Clean-up Drive</h5>
-                <p class="card-text">
-                  Organizing volunteers for neighborhood clean-up activities.
-                </p>
-                <div class="d-flex justify-content-between mb-1">
-                  <small>Progress</small>
-                  <small>40%</small>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="mt-3">
-                  <small class="text-muted"><i class="fas fa-calendar me-1"></i> Deadline: Mar 15,
-                    2025</small>
-                </div>
-                <div class="mt-3">
-                  <a href="#" class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-eye me-1"></i>View</a>
-                  <a class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#uploadModal"><i
-                      class="fas fa-upload me-1"></i>Upload Report</a>
-                </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100"
+                  aria-valuemin="0" aria-valuemax="100"></div>
               </div>
-            </div>
-          </div>
-
-          <!-- Project Card 3 -->
-          <div class="col-md-6 col-lg-4">
-            <div class="card project-card">
-              <span class="badge bg-info status-badge">New</span>
-              <div class="card-body">
-                <h5 class="card-title">Sports Tournament</h5>
-                <p class="card-text">
-                  Organizing local sports competitions for youth engagement.
-                </p>
-                <div class="d-flex justify-content-between mb-1">
-                  <small>Progress</small>
-                  <small>10%</small>
-                </div>
-                <div class="progress">
-                  <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="10"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="mt-3">
-                  <small class="text-muted"><i class="fas fa-calendar me-1"></i> Deadline: May 20,
-                    2025</small>
-                </div>
-                <div class="mt-3">
-                  <a href="#" class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-eye me-1"></i>View</a>
-                  <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
-                    data-bs-target="#uploadModal">
-                    <i class="fas fa-upload me-1"></i>Upload Report
-                  </button>
-                </div>
+              <div class="mt-3">
+                <small class="text-muted"><i class="fas fa-calendar me-1"></i> Deadline: Apr 30,
+                  2025</small>
+              </div>
+              <div class="mt-3">
+                <a href="#" class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-eye me-1"></i>View</a>
+                <a class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#uploadModal"><i
+                    class="fas fa-upload me-1"></i>Upload Report</a>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Recent Project Activity -->
-        <div class="row mb-4">
-          <div class="col-md-12">
-            <div class="card">
-              <div class="card-header">
-                <h5><i class="fas fa-history me-2"></i>Recent Activity</h5>
+        <!-- Project Card 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card project-card">
+            <span class="badge bg-warning status-badge">Delayed</span>
+            <div class="card-body">
+              <h5 class="card-title">Community Clean-up Drive</h5>
+              <p class="card-text">
+                Organizing volunteers for neighborhood clean-up activities.
+              </p>
+              <div class="d-flex justify-content-between mb-1">
+                <small>Progress</small>
+                <small>40%</small>
               </div>
-              <div class="card-body">
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>Youth Leadership Program</strong>
-                      <p class="mb-0 text-muted">Progress report submitted</p>
-                    </div>
-                    <span class="text-muted">5 hours ago</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>Community Clean-up Drive</strong>
-                      <p class="mb-0 text-muted">
-                        Status changed to "Delayed"
-                      </p>
-                    </div>
-                    <span class="text-muted">Yesterday</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>Sports Tournament</strong>
-                      <p class="mb-0 text-muted">
-                        New project added to your list
-                      </p>
-                    </div>
-                    <span class="text-muted">3 days ago</span>
-                  </li>
-                  <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                      <strong>Youth Leadership Program</strong>
-                      <p class="mb-0 text-muted">
-                        Budget allocation approved
-                      </p>
-                    </div>
-                    <span class="text-muted">1 week ago</span>
-                  </li>
-                </ul>
+              <div class="progress">
+                <div class="progress-bar bg-warning" role="progressbar" style="width: 40%" aria-valuenow="40"
+                  aria-valuemin="0" aria-valuemax="100"></div>
               </div>
+              <div class="mt-3">
+                <small class="text-muted"><i class="fas fa-calendar me-1"></i> Deadline: Mar 15,
+                  2025</small>
+              </div>
+              <div class="mt-3">
+                <a href="#" class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-eye me-1"></i>View</a>
+                <a class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#uploadModal"><i
+                    class="fas fa-upload me-1"></i>Upload Report</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="card project-card">
+            <span class="badge bg-info status-badge">New</span>
+            <div class="card-body">
+              <h5 class="card-title">Sports Tournament</h5>
+              <p class="card-text">
+                Organizing local sports competitions for youth engagement.
+              </p>
+              <div class="d-flex justify-content-between mb-1">
+                <small>Progress</small>
+                <small>10%</small>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="10"
+                  aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+              <div class="mt-3">
+                <small class="text-muted"><i class="fas fa-calendar me-1"></i> Deadline: May 20,
+                  2025</small>
+              </div>
+              <div class="mt-3">
+                <a href="#" class="btn btn-sm btn-outline-primary me-1"><i class="fas fa-eye me-1"></i>View</a>
+                <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal"
+                  data-bs-target="#uploadModal">
+                  <i class="fas fa-upload me-1"></i>Upload Report
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Project Activity -->
+      <div class="row mb-4">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h5><i class="fas fa-history me-2"></i>Recent Activity</h5>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Youth Leadership Program</strong>
+                    <p class="mb-0 text-muted">Progress report submitted</p>
+                  </div>
+                  <span class="text-muted">5 hours ago</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Community Clean-up Drive</strong>
+                    <p class="mb-0 text-muted">
+                      Status changed to "Delayed"
+                    </p>
+                  </div>
+                  <span class="text-muted">Yesterday</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Sports Tournament</strong>
+                    <p class="mb-0 text-muted">
+                      New project added to your list
+                    </p>
+                  </div>
+                  <span class="text-muted">3 days ago</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <strong>Youth Leadership Program</strong>
+                    <p class="mb-0 text-muted">
+                      Budget allocation approved
+                    </p>
+                  </div>
+                  <span class="text-muted">1 week ago</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

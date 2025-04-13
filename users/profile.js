@@ -1,8 +1,31 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const profile = document.getElementById('profile');
-   
-    const userData = getUserData();
+    // Check if user is authenticated
+    const authUser = JSON.parse(localStorage.getItem("authUser")) || 
+                    JSON.parse(sessionStorage.getItem("authUser"));
 
+    if (!authUser) {
+        return void (window.location.href = "../index.html");
+    }
+
+    const profile = document.getElementById('profile');
+    const logoutBtn = document.getElementById('logout-btn');
+   
+    // Handle logout
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            // Clear authentication data
+            localStorage.removeItem("authUser");
+            sessionStorage.removeItem("authUser");
+            console.log("Logged out");
+            // Redirect to login page
+            window.location.href = "/index.html";
+        });
+    }
+
+    // Set user information in the UI
+    document.getElementById("user-username").textContent = authUser.username;
+
+    const userData = getUserData();
     userData.then(data => {
         if (data) {
             populateProfile(data);

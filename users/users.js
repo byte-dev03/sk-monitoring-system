@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Dynamically add navbar to each user's routes
   const headers = document.getElementsByTagName("header");
   if (!window.location.href.includes("index.html")) {
-  Array.from(headers).forEach((header) => populateHeader(header));
+    Array.from(headers).forEach((header) => populateHeader(header));
   }
 
   // Set user information in the UI
@@ -29,27 +29,151 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Redirect to login page
     window.location.href = "/index.html";
+    console.log("Logged out");
   });
 
+  // Initialize modals
+  initModals();
+  
+  // Load user data
+  loadUserData();
 
   if (window.location.href.includes("index.html")) {
-    // Event listener for adding a new accomplishment
-    document.querySelector("#newAccomplishment").addEventListener("click", () => {
-      addNew("accomplishment");
-    });
-
-    // Event listener for adding a new project
-    document.querySelector("#newProject").addEventListener("click", () => {
-      addNew("project");
-    });
-
-      // Setup the upload UI for the user's dashboard
-      renderUploadUI("#uploadModal .modal-body");
+    // Setup the upload UI for the user's dashboard
+    renderUploadUI("#uploadModal .modal-body");
   } else if (window.location.href.includes("profile.html")){
     const backBtn = document.getElementById('back-btn');
     backBtn.addEventListener('click', ()=> {
       window.location.href = "index.html"
     })
+  }
+
+  // Handle new project form submission
+  const newProjectForm = document.getElementById('newProjectForm');
+  if (newProjectForm) {
+    newProjectForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const projectData = {
+        id: Date.now(), // Generate a unique ID
+        title: formData.get('title'),
+        description: formData.get('description'),
+        start_date: formData.get('start_date'),
+        end_date: formData.get('end_date'),
+        status: 'On Track',
+        progress: 0,
+        updated_at: new Date().toISOString()
+      };
+
+      // Add new project to existing projects
+      const projectsContainer = document.querySelector('#project-cards');
+      if (projectsContainer) {
+        const projectHtml = `
+          <div class="col-md-6 col-lg-4">
+            <div class="card project-card" data-project-id="${projectData.id}">
+              <span class="badge bg-info status-badge">${projectData.status}</span>
+              <div class="card-body">
+                <h5 class="card-title">${projectData.title}</h5>
+                <p class="card-text">${projectData.description}</p>
+                <div class="d-flex justify-content-between mb-1">
+                  <small>Progress</small>
+                  <small>${projectData.progress}%</small>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar bg-info" 
+                       role="progressbar" 
+                       style="width: ${projectData.progress}%" 
+                       aria-valuenow="${projectData.progress}" 
+                       aria-valuemin="0" 
+                       aria-valuemax="100">
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar me-1"></i> Deadline: ${new Date(projectData.end_date).toLocaleDateString()}
+                  </small>
+                </div>
+                <div class="mt-3">
+                  <button class="btn btn-sm btn-outline-primary me-1 view-project" data-project-id="${projectData.id}">
+                    <i class="fas fa-eye me-1"></i>View
+                  </button>
+                  <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                    <i class="fas fa-upload me-1"></i>Upload Report
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        projectsContainer.insertAdjacentHTML('afterbegin', projectHtml);
+      }
+
+      // Add to recent activities
+      addToRecentActivities({
+        title: projectData.title,
+        description: 'New project added',
+        type: 'Project',
+        date: new Date().toISOString(),
+        status: projectData.status
+      });
+
+      // Close modal and reset form
+      const modal = bootstrap.Modal.getInstance(document.getElementById('newProjectModal'));
+      modal.hide();
+      e.target.reset();
+    });
+  }
+
+  // Handle new accomplishment form submission
+  const newAccomplishmentForm = document.getElementById('newAccomplishmentForm');
+  if (newAccomplishmentForm) {
+    newAccomplishmentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const accomplishmentData = {
+        id: Date.now(),
+        title: formData.get('title'),
+        description: formData.get('description'),
+        completed_at: new Date().toISOString(),
+        status: 'Completed'
+      };
+
+      // Add new accomplishment to existing accomplishments
+      const accomplishmentsContainer = document.querySelector('#accomplishment-cards');
+      if (accomplishmentsContainer) {
+        const accomplishmentHtml = `
+          <div class="col-md-6 col-lg-4">
+            <div class="card accomplishment-card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">${accomplishmentData.title}</h5>
+                <p class="card-text">${accomplishmentData.description}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar me-1"></i> ${new Date(accomplishmentData.completed_at).toLocaleDateString()}
+                  </small>
+                  <span class="badge bg-${getStatusColor(accomplishmentData.status)}">${accomplishmentData.status}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        accomplishmentsContainer.insertAdjacentHTML('afterbegin', accomplishmentHtml);
+      }
+
+      // Add to recent activities
+      addToRecentActivities({
+        title: accomplishmentData.title,
+        description: 'New accomplishment added',
+        type: 'Accomplishment',
+        date: accomplishmentData.completed_at,
+        status: accomplishmentData.status
+      });
+
+      // Close modal and reset form
+      const modal = bootstrap.Modal.getInstance(document.getElementById('newAccomplishmentModal'));
+      modal.hide();
+      e.target.reset();
+    });
   }
 });
 
@@ -340,5 +464,233 @@ function populateHeader(header) {
       </div>
     </nav>
   `;
+}
+
+function initModals() {
+  // New Project Modal
+  const newProjectBtn = document.getElementById('newProject');
+  if (newProjectBtn) {
+    newProjectBtn.addEventListener('click', () => {
+      const modal = new bootstrap.Modal(document.getElementById('newProjectModal'));
+      modal.show();
+    });
+  }
+
+  // New Accomplishment Modal
+  const newAccomplishmentBtn = document.getElementById('newAccomplishment');
+  if (newAccomplishmentBtn) {
+    newAccomplishmentBtn.addEventListener('click', () => {
+      const modal = new bootstrap.Modal(document.getElementById('newAccomplishmentModal'));
+      modal.show();
+    });
+  }
+
+  // Upload Report Modal
+  const uploadBtns = document.querySelectorAll('[data-bs-target="#uploadModal"]');
+  uploadBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const projectId = e.target.closest('.project-card').dataset.projectId;
+      document.getElementById('uploadProjectId').value = projectId;
+    });
+  });
+}
+
+async function loadUserData() {
+  try {
+    const response = await fetch('../data/sk_federation_data.json');
+    const data = await response.json();
+    
+    // Get the authenticated user
+    const authUser = JSON.parse(localStorage.getItem("authUser")) || 
+                    JSON.parse(sessionStorage.getItem("authUser"));
+    
+    // Get user's barangay from users.json
+    const usersResponse = await fetch('../data/users.json');
+    const users = await usersResponse.json();
+    const user = users.find(u => u.username === authUser.username);
+    
+    if (!user) {
+      console.error('User not found');
+      return;
+    }
+
+    // Find user's barangay
+    const userBarangay = data.find(b => b.name === user.info.assigned_barangay);
+    if (!userBarangay) {
+      console.error('Barangay not found for user');
+      return;
+    }
+
+    // Render projects
+    renderProjects(userBarangay.projects);
+    
+    // Render accomplishments
+    renderAccomplishments(userBarangay.accomplishments);
+    
+    // Render recent activities
+    renderRecentActivities(userBarangay);
+  } catch (error) {
+    console.error('Error loading user data:', error);
+  }
+}
+
+function renderProjects(projects) {
+  const projectsContainer = document.querySelector('.row.mb-4');
+  if (!projectsContainer) return;
+
+  projectsContainer.innerHTML = projects.map(project => `
+    <div class="col-md-6 col-lg-4">
+      <div class="card project-card" data-project-id="${project.id}">
+        <span class="badge bg-${getStatusColor(project.status)} status-badge">${project.status}</span>
+        <div class="card-body">
+          <h5 class="card-title">${project.title}</h5>
+          <p class="card-text">${project.description}</p>
+          <div class="d-flex justify-content-between mb-1">
+            <small>Progress</small>
+            <small>${project.progress}%</small>
+          </div>
+          <div class="progress">
+            <div class="progress-bar bg-${getStatusColor(project.status)}" 
+                 role="progressbar" 
+                 style="width: ${project.progress}%" 
+                 aria-valuenow="${project.progress}" 
+                 aria-valuemin="0" 
+                 aria-valuemax="100">
+            </div>
+          </div>
+          <div class="mt-3">
+            <small class="text-muted">
+              <i class="fas fa-calendar me-1"></i> Deadline: ${new Date(project.end_date).toLocaleDateString()}
+            </small>
+          </div>
+          <div class="mt-3">
+            <button class="btn btn-sm btn-outline-primary me-1 view-project" data-project-id="${project.id}">
+              <i class="fas fa-eye me-1"></i>View
+            </button>
+            <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#uploadModal">
+              <i class="fas fa-upload me-1"></i>Upload Report
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Add event listeners for view buttons
+  document.querySelectorAll('.view-project').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const projectId = e.target.closest('.project-card').dataset.projectId;
+      viewProjectDetails(projectId);
+    });
+  });
+}
+
+function renderAccomplishments(accomplishments) {
+  const accomplishmentsContainer = document.querySelector('#accomplishment-cards');
+  if (!accomplishmentsContainer) return;
+
+  accomplishmentsContainer.innerHTML = accomplishments.map(accomplishment => `
+    <div class="col-md-6 col-lg-4">
+      <div class="card accomplishment-card mb-3">
+        <div class="card-body">
+          <h5 class="card-title">${accomplishment.title}</h5>
+          <p class="card-text">${accomplishment.description}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <small class="text-muted">
+              <i class="fas fa-calendar me-1"></i> ${new Date(accomplishment.completed_at).toLocaleDateString()}
+            </small>
+            <span class="badge bg-${getStatusColor(accomplishment.status)}">${accomplishment.status}</span>
+          </div>
+          ${accomplishment.report_url ? `
+            <div class="mt-2">
+              <a href="${accomplishment.report_url}" target="_blank" class="btn btn-sm btn-outline-primary">
+                <i class="fas fa-file-pdf me-1"></i>View Report
+              </a>
+            </div>
+          ` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderRecentActivities(barangay) {
+  const activitiesContainer = document.querySelector('.list-group.list-group-flush');
+  if (!activitiesContainer) return;
+
+  // Combine projects and accomplishments and sort by date
+  const recentActivities = [
+    ...barangay.projects.map(p => ({
+      ...p,
+      type: 'Project',
+      date: p.updated_at || p.start_date,
+      icon: 'project-diagram',
+      status: p.status
+    })),
+    ...barangay.accomplishments.map(a => ({
+      ...a,
+      type: 'Accomplishment',
+      date: a.completed_at,
+      icon: 'check-circle',
+      status: a.status
+    }))
+  ].sort((a, b) => new Date(b.date) - new Date(a.date))
+  .slice(0, 5);
+
+  activitiesContainer.innerHTML = recentActivities.map(activity => `
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <strong>${activity.title}</strong>
+        <p class="mb-0 text-muted">
+          <i class="fas fa-${activity.icon} me-1"></i>
+          ${activity.type} • ${new Date(activity.date).toLocaleDateString()}
+        </p>
+        <small class="text-muted">${activity.description}</small>
+      </div>
+      <span class="badge bg-${getStatusColor(activity.status)}">${activity.status}</span>
+    </li>
+  `).join('');
+}
+
+function getStatusColor(status) {
+  switch (status) {
+    case 'Completed': return 'success';
+    case 'On Track': return 'info';
+    case 'Delayed': return 'warning';
+    default: return 'secondary';
+  }
+}
+
+function viewProjectDetails(projectId) {
+  // Implement project details view
+  console.log('Viewing project:', projectId);
+}
+
+function addToRecentActivities(activity) {
+  const activitiesContainer = document.querySelector('.list-group.list-group-flush');
+  if (!activitiesContainer) return;
+
+  const activityHtml = `
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        <strong>${activity.title}</strong>
+        <p class="mb-0 text-muted">
+          <i class="fas fa-${activity.type === 'Project' ? 'project-diagram' : 'check-circle'} me-1"></i>
+          ${activity.type} • ${new Date(activity.date).toLocaleDateString()}
+        </p>
+        <small class="text-muted">${activity.description}</small>
+      </div>
+      <span class="badge bg-${getStatusColor(activity.status)}">${activity.status}</span>
+    </li>
+  `;
+
+  // Add new activity at the top
+  activitiesContainer.insertAdjacentHTML('afterbegin', activityHtml);
+
+  // Remove oldest activity if more than 5
+  const activities = activitiesContainer.querySelectorAll('.list-group-item');
+  if (activities.length > 5) {
+    activities[activities.length - 1].remove();
+  }
 }
 
