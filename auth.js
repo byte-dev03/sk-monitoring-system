@@ -49,9 +49,9 @@ loginForm.addEventListener("submit", async (e) => {
       // Show dashboard after brief delay
       setTimeout(() => {
         if (user.username === "admin") {
-          window.location.href = "/admin/index.html";
+          window.location.href = "admin/index.html";
         } else {
-          window.location.href = "/users/index.html";
+          window.location.href = "users/index.html";
         }
       }, 1500);
     } else {
