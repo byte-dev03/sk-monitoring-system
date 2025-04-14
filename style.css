@@ -21,7 +21,7 @@ html {
 
 body {
   font-family: "Outfit", sans-serif;
-  background: linear-gradient(135deg, #524ce7 0%, #c6ef3e 50%, #de4b15 100%);
+  background: linear-gradient(135deg, #0057b8 0%, #ffd600 50%, #d62612 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -50,8 +50,8 @@ body {
 }
 
 @media (max-width: 576px) {
-  #header {
-  }
+  #header {}
+
   #header #logo {
     width: 300px;
     margin-top: 0px;

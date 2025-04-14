@@ -154,8 +154,8 @@ body {
 
 #search-icon {
   position: absolute;
-  left: 15px;
-  top: 50%;
+  left: 41.5%;
+  top: 19%;
   transform: translateY(-50%);
   z-index: 1;
 }
@@ -260,12 +260,12 @@ body {
   .container {
     padding: 1rem;
   }
-  
+
   .avatar-circle {
     width: 100px;
     height: 100px;
   }
-  
+
   .card-body {
     padding: 1rem;
   }
